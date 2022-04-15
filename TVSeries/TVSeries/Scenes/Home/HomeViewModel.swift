@@ -11,6 +11,11 @@ import UIKit
 
 final class HomeViewModel {
     
+    //MARK: - Private Variables
+    
+    ///Next page to be fetched by API
+    private var page = 0
+    
     //MARK: - Private Constants
     
     private let service: HomeServiceProtocol
@@ -31,22 +36,18 @@ final class HomeViewModel {
     
     //MARK: - Public Functions
     
-    func start() {
-        fetchTVShows()
-    }
-    
-    //MARK: - Private Functions
-    
-    private func fetchTVShows() {
-        service.fetchTVShows { [weak self] result in
+    func fetchTVShows() {
+        service.fetchTVShows(page: page) { [weak self] result in
             guard let self = self else { return }
+            self.page += 1
             switch result {
             case .success(let series):
                 self.seriesSubject.onNext(series)
             case .failure(let error):
-                print(#function, error.localizedDescription)
+                print(#function, error)
                 self.errorSubject.onNext("Unable to fetch Series")
             }
         }
     }
+    
 }

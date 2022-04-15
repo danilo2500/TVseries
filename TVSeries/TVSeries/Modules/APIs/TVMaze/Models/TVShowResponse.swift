@@ -11,10 +11,10 @@ struct TVShowResponse: Codable {
     let id: Int
     let url: String
     let name: String
-    let type: TVShowTypeResponse
-    let language: LanguageResponse
+    let type: String
+    let language: String
     let genres: [String]
-    let status: StatusResponse
+    let status: String
     let runtime: Int?
     let averageRuntime: Int?
     let premiered, ended: String?
@@ -49,11 +49,6 @@ struct ImageResponse: Codable {
     let original: String
 }
 
-enum LanguageResponse: String, Codable {
-    case english = "English"
-    case japanese = "Japanese"
-}
-
 // MARK: - Links
 struct LinksResponse: Codable {
     let linksSelf: NextEpisodeResponse
@@ -66,7 +61,7 @@ struct LinksResponse: Codable {
     }
 }
 
-// MARK: - Nextepisode
+// MARK: - Next Episode
 struct NextEpisodeResponse: Codable {
     let href: String
 }
@@ -81,33 +76,9 @@ struct NetworkResponse: Codable {
 
 // MARK: - Country
 struct CountryResponse: Codable {
-    let name: CountryNameResponse
-    let code: CountryCodeResponse
-    let timezone: TimeZoneResponse
-}
-
-enum CountryCodeResponse: String, Codable {
-    case ca = "CA"
-    case fr = "FR"
-    case gb = "GB"
-    case jp = "JP"
-    case us = "US"
-}
-
-enum CountryNameResponse: String, Codable {
-    case canada = "Canada"
-    case france = "France"
-    case japan = "Japan"
-    case unitedKingdom = "United Kingdom"
-    case unitedStates = "United States"
-}
-
-enum TimeZoneResponse: String, Codable {
-    case americaHalifax = "America/Halifax"
-    case americaNewYork = "America/New_York"
-    case asiaTokyo = "Asia/Tokyo"
-    case europeLondon = "Europe/London"
-    case europeParis = "Europe/Paris"
+    let name: String
+    let code: String
+    let timezone: String
 }
 
 // MARK: - Rating
@@ -118,33 +89,5 @@ struct RatingResponse: Codable {
 // MARK: - Schedule
 struct ScheduleResponse: Codable {
     let time: String
-    let days: [DayResponse]
-}
-
-enum DayResponse: String, Codable {
-    case friday = "Friday"
-    case monday = "Monday"
-    case saturday = "Saturday"
-    case sunday = "Sunday"
-    case thursday = "Thursday"
-    case tuesday = "Tuesday"
-    case wednesday = "Wednesday"
-}
-
-enum StatusResponse: String, Codable {
-    case ended = "Ended"
-    case running = "Running"
-    case toBeDetermined = "To Be Determined"
-}
-
-enum TVShowTypeResponse: String, Codable {
-    case animation = "Animation"
-    case documentary = "Documentary"
-    case news = "News"
-    case panelShow = "Panel Show"
-    case reality = "Reality"
-    case scripted = "Scripted"
-    case sports = "Sports"
-    case talkShow = "Talk Show"
-    case variety = "Variety"
+    let days: [String]
 }

@@ -31,9 +31,9 @@ final class HomeViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+//        view.backgroundColor = .white
         setUpBindings()
-        viewModel.start()
+        viewModel.fetchTVShows()
     }
 
     private func setUpBindings() {

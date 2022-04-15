@@ -115,7 +115,6 @@
 				5DD7A773A584A29B97CDED77 /* Pods-TVSeriesTests.debug.xcconfig */,
 				2A60922DE68781740B3183FD /* Pods-TVSeriesTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -149,8 +148,6 @@
 				55E0016C2809B82E00E25121 /* Modules */,
 				559D00A42809B0450066E545 /* AppDelegate.swift */,
 				559D00A62809B0450066E545 /* SceneDelegate.swift */,
-				559D00AD2809B0480066E545 /* Assets.xcassets */,
-				559D00B22809B0480066E545 /* Info.plist */,
 				559D00AF2809B0480066E545 /* LaunchScreen.storyboard */,
 			);
 			path = TVSeries;
@@ -210,6 +207,8 @@
 		55E0016F2809B88300E25121 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				559D00AD2809B0480066E545 /* Assets.xcassets */,
+				559D00B22809B0480066E545 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";

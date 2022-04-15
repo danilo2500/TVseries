@@ -8,7 +8,7 @@
 import Foundation
 import UIKit.UIImage
 
-struct Serie {
+struct TVShow {
     let name: String
-    let image: UIImage
+    let imageURL: String
 }

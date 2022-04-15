@@ -11,15 +11,42 @@ import UIKit
 
 final class HomeViewModel {
     
+    //MARK: - Private Constants
+    
+    private let service: HomeServiceProtocol
+    
     //MARK: - Observables
     
     lazy var series = seriesSubject.asObservable()
-    private let seriesSubject = PublishSubject<[Serie]>()
+    private let seriesSubject = PublishSubject<[TVShow]>()
     
-    func fetchSeries() {
-        let series: [Serie] = [
-            .init(name: "Example", image: UIImage())
-        ]
-        seriesSubject.onNext(series)
+    lazy var error = errorSubject.asObservable()
+    private let errorSubject = PublishSubject<String>()
+    
+    //MARK: - Initialization
+    
+    init(service: HomeServiceProtocol) {
+        self.service = service
+    }
+    
+    //MARK: - Public Functions
+    
+    func start() {
+        fetchTVShows()
+    }
+    
+    //MARK: - Private Functions
+    
+    private func fetchTVShows() {
+        service.fetchTVShows { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let series):
+                self.seriesSubject.onNext(series)
+            case .failure(let error):
+                print(#function, error.localizedDescription)
+                self.errorSubject.onNext("Unable to fetch Series")
+            }
+        }
     }
 }

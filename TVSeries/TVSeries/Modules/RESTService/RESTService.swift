@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RESTService<T: RESTRequest>{
+class RESTService<T: RESTRequest> {
     
     //MARK: - Public Functions
     

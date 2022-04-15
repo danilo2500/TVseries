@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum RESTError: Error {
+enum RESTError: Error {
     ///Could not create valid URL
     case failedToCreateURL
 }

@@ -10,7 +10,7 @@ import UIKit.UIViewController
 
 final class MainAppCoordinator: Coordinator {
     
-    //MARK: - Variables
+    //MARK: - Private Variables
     
     private(set) var navigationController: UINavigationController
     
@@ -29,7 +29,8 @@ final class MainAppCoordinator: Coordinator {
     //MARK: - Private Functions
     
     private func showHomeScreen() {
-        let viewModel = HomeViewModel()
+        let service = HomeService()
+        let viewModel = HomeViewModel(service: service)
         let viewController = HomeViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }

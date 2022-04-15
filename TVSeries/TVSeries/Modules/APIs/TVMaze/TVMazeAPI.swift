@@ -8,26 +8,26 @@
 import Foundation
 
 enum TVMazeAPI {
-    case getSeries
+    case getSeries(page: Int)
 }
 
 extension TVMazeAPI: RESTRequest {
     
     var baseURL: String {
-        return ""
+        return "https://api.tvmaze.com"
     }
-    
+
     var path: String {
         switch self {
         case .getSeries:
-            return ""
+            return "/shows"
         }
     }
     
     var queryItems: [URLQueryItem]? {
         switch self {
-        case .getSeries:
-            return nil
+        case .getSeries(let page):
+            return [URLQueryItem(name: "page", value: String(page))]
         }
     }
     

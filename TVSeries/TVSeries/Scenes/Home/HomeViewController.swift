@@ -33,7 +33,7 @@ final class HomeViewController: UITableViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setUpBindings()
-        viewModel.fetchSeries()
+        viewModel.start()
     }
 
     private func setUpBindings() {

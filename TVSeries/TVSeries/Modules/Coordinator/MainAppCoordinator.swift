@@ -8,7 +8,7 @@
 import Foundation
 import UIKit.UIViewController
 
-class MainAppCoordinator: Coordinator {
+final class MainAppCoordinator: Coordinator {
     
     //MARK: - Variables
     

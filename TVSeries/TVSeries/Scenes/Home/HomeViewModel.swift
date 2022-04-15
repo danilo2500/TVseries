@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import UIKit
 
-class HomeViewModel {
+final class HomeViewModel {
     
     //MARK: - Observables
     

@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class HomeViewController: UITableViewController {
+final class HomeViewController: UITableViewController {
     
     //MARK: - Private Variables
     

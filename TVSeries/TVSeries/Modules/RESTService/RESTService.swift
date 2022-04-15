@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 class RESTService<T: RESTRequest> {
     
@@ -21,15 +22,33 @@ class RESTService<T: RESTRequest> {
         }
         
         URLSession.shared.dataTask(with: urlRequest) { (data, response, error) in
-            if let data = data {
-                do {
-                    let object = try JSONDecoder().decode(U.self, from: data)
-                    completion(.success(object))
-                } catch {
-                    completion(.failure(error))
+            DispatchQueue.main.async {
+                if let data = data {
+                    do {
+                        let object = try JSONDecoder().decode(U.self, from: data)
+                        completion(.success(object))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                } else {
+                    completion(.failure(error ?? NSError()))
                 }
-            } else {
-                completion(.failure(error ?? NSError()))
+            }
+        }.resume()
+    }
+    
+    func requestImage(urlString: String, completion: @escaping (Result<UIImage, Error>) -> Void) {
+        guard let url = URL(string: urlString) else {
+            completion(.failure(RESTError.failedToCreateURL))
+            return
+        }
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    completion(.success(image))
+                } else {
+                    completion(.failure(RESTError.failedToCreateImage))
+                }
             }
         }.resume()
     }

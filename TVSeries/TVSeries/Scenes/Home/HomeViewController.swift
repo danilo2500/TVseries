@@ -38,11 +38,27 @@ final class HomeViewController: UITableViewController {
 
     private func setUpBindings() {
         tableView.dataSource = nil
-        viewModel.series.bind(to: tableView.rx.items) { tableView, indexPath, serie in
+        viewModel.tvShows.bind(to: tableView.rx.items) { tableView, row, tvShow in
             let cell = UITableViewCell(style: .default, reuseIdentifier: "")
-            cell.textLabel?.text = serie.name
+            cell.textLabel?.text = tvShow.name
+            self.viewModel.fetchImage(at: IndexPath(row: row, section: 0))
+            cell.imageView?.image = UIImage()
             return cell
         }.disposed(by: disposeBag)
+        
+        tableView.rx.prefetchRows.subscribe(onNext: { [weak self] indexPaths in
+            indexPaths.forEach({
+                self?.viewModel.fetchImage(at: $0)
+            })
+        }).disposed(by: disposeBag)
+        
+        viewModel.images.subscribe { [weak self] image, indexPath in
+            guard let self = self else { return }
+            let cell = self.tableView.cellForRow(at: indexPath)
+            cell?.imageView?.image = image
+        }.disposed(by: disposeBag)
+
     }
+
 }
 

@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class HomeViewController: UITableViewController {
     
-    //MARK: - Variables
+    //MARK: - Private Variables
     
+    let disposeBag = DisposeBag()
     let viewModel: HomeViewModel
     
     //MARK: - Initialization
@@ -29,7 +32,17 @@ class HomeViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        setUpBindings()
+        viewModel.fetchSeries()
     }
 
+    private func setUpBindings() {
+        tableView.dataSource = nil
+        viewModel.series.bind(to: tableView.rx.items) { tableView, indexPath, serie in
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "")
+            cell.textLabel?.text = serie.name
+            return cell
+        }.disposed(by: disposeBag)
+    }
 }
 

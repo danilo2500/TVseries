@@ -15,6 +15,7 @@
 		559D00BC2809B0480066E545 /* TVSeriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00BB2809B0480066E545 /* TVSeriesTests.swift */; };
 		559D00C62809B0480066E545 /* TVSeriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00C52809B0480066E545 /* TVSeriesUITests.swift */; };
 		559D00C82809B0480066E545 /* TVSeriesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00C72809B0480066E545 /* TVSeriesUITestsLaunchTests.swift */; };
+		55C241002809D19900EFA02D /* Serie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C240FF2809D19900EFA02D /* Serie.swift */; };
 		55E001662809B5F600E25121 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001652809B5F600E25121 /* HomeViewModel.swift */; };
 		55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001672809B62500E25121 /* MainAppCoordinator.swift */; };
 		55E0016A2809B65600E25121 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001692809B65600E25121 /* Coordinator.swift */; };
@@ -55,6 +56,7 @@
 		559D00C12809B0480066E545 /* TVSeriesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TVSeriesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		559D00C52809B0480066E545 /* TVSeriesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVSeriesUITests.swift; sourceTree = "<group>"; };
 		559D00C72809B0480066E545 /* TVSeriesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVSeriesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		55C240FF2809D19900EFA02D /* Serie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serie.swift; sourceTree = "<group>"; };
 		55E001652809B5F600E25121 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		55E001672809B62500E25121 /* MainAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppCoordinator.swift; sourceTree = "<group>"; };
 		55E001692809B65600E25121 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -170,6 +172,14 @@
 			path = TVSeriesUITests;
 			sourceTree = "<group>";
 		};
+		55C240FE2809D18900EFA02D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				55C240FF2809D19900EFA02D /* Serie.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		55E0016B2809B82700E25121 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -198,6 +208,7 @@
 		55E0016E2809B84300E25121 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				55C240FE2809D18900EFA02D /* Models */,
 				559D00A82809B0450066E545 /* HomeViewController.swift */,
 				55E001652809B5F600E25121 /* HomeViewModel.swift */,
 			);
@@ -455,6 +466,7 @@
 				559D00A52809B0450066E545 /* AppDelegate.swift in Sources */,
 				55E0016A2809B65600E25121 /* Coordinator.swift in Sources */,
 				55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */,
+				55C241002809D19900EFA02D /* Serie.swift in Sources */,
 				559D00A72809B0450066E545 /* SceneDelegate.swift in Sources */,
 				55E001662809B5F600E25121 /* HomeViewModel.swift in Sources */,
 			);

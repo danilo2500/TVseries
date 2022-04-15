@@ -26,7 +26,7 @@ class HomeService {
     //MARK: - Private Functions
     
     private func requestTVShows(page: Int, completion: @escaping (Result<[TVShowResponse], Error>) -> Void) {
-        service.request(.getSeries(page: page), completion: completion)
+        service.request(.getTVShows(page: page), completion: completion)
     }
     
     

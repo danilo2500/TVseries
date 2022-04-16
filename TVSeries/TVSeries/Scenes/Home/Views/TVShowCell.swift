@@ -21,6 +21,7 @@ class TVShowCell: UITableViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
+
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
@@ -51,6 +52,10 @@ class TVShowCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        posterImageView.image = nil
+    }
+    
     //MARK: - Private Functions
     
     private func setUpUI() {
@@ -58,8 +63,10 @@ class TVShowCell: UITableViewCell {
         backgroundColor = .clear
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(posterImageView)
+        let heightConstraint = posterImageView.heightAnchor.constraint(equalToConstant: 150)
+        heightConstraint.priority = .defaultHigh
         addConstraints([
-            posterImageView.heightAnchor.constraint(equalToConstant: 150),
+            heightConstraint,
             posterImageView.widthAnchor.constraint(equalToConstant: 100),
             posterImageView.topAnchor.constraint(equalTo: topAnchor, constant: minimumSpacing),
             posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: minimumSpacing),

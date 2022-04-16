@@ -63,8 +63,9 @@ final class HomeViewController: UITableViewController {
     private func setUpTableView() {
         tableView.dataSource = nil
         tableView.register(TVShowCell.self, forCellReuseIdentifier: String(describing: TVShowCell.self))
-        tableView.separatorStyle = .singleLine
+//        tableView.separatorStyle = .none
         tableView.separatorColor = .lightGray
+        tableView.estimatedRowHeight = 194
     }
     
     private func setUpGradient() {

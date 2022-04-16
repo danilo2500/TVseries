@@ -8,27 +8,27 @@
 import Foundation
 
 struct TVShowResponse: Codable {
-    let id: Int
-    let url: String
+    let id: Int?
+    let url: String?
     let name: String
-    let type: String
-    let language: String
-    let genres: [String]
-    let status: String
+    let type: String?
+    let language: String?
+    let genres: [String]?
+    let status: String?
     let runtime: Int?
     let averageRuntime: Int?
     let premiered, ended: String?
     let officialSite: String?
-    let schedule: ScheduleResponse
-    let rating: RatingResponse
-    let weight: Int
+    let schedule: ScheduleResponse?
+    let rating: RatingResponse?
+    let weight: Int?
     let network: NetworkResponse?
     let webChannel: NetworkResponse?
-    let externals: ExternalsResponse
-    let image: ImageResponse
-    let summary: String
-    let updated: Int
-    let links: LinksResponse
+    let externals: ExternalsResponse?
+    let image: ImageResponse?
+    let summary: String?
+    let updated: Int?
+    let links: LinksResponse?
 
     enum CodingKeys: String, CodingKey {
         case id, url, name, type, language, genres, status, runtime, averageRuntime, premiered, ended, officialSite, schedule, rating, weight, network, webChannel, externals, image, summary, updated
@@ -38,7 +38,7 @@ struct TVShowResponse: Codable {
 
 // MARK: - Externals
 struct ExternalsResponse: Codable {
-    let tvrage: Int
+    let tvrage: Int?
     let thetvdb: Int?
     let imdb: String?
 }

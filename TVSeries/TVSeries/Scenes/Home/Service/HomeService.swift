@@ -10,6 +10,7 @@ import UIKit.UIImage
 
 protocol HomeServiceProtocol {
     func fetchTVShows(page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void)
+    func searchTVShow(name: String, completion: @escaping (Result<[TVShow], Error>) -> Void)
     func fetchImage(withURL url: String, completion: @escaping (Result<UIImage, Error>) -> Void)
 }
 
@@ -17,7 +18,8 @@ class HomeService {
     
     //MARK: - Private Variables
     
-    var cachedImages: [String: UIImage] = [:]
+    private var cachedTVShows: [Int: [TVShow]] = [:]
+    private var cachedImages: [String: UIImage] = [:]
     
     //MARK: - Private Constants
     
@@ -29,20 +31,35 @@ class HomeService {
         service.request(.getTVShows(page: page), completion: completion)
     }
     
-    
+    private func requestSearchTVShows(name: String, completion: @escaping (Result<[TVShowQueryResponse], Error>) -> Void) {
+        service.request(.searchTVShow(name: name), completion: completion)
+    }
 }
 
 //MARK: - HomeServiceProtocol
 
 extension HomeService: HomeServiceProtocol {
+    func searchTVShow(name: String, completion: @escaping (Result<[TVShow], Error>) -> Void) {
+        requestSearchTVShows(name: name) { result in
+            switch result {
+            case .success(let response):
+                let TVShows = response.map(\.show).map({TVShow(response: $0)})
+                completion(.success(TVShows))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchTVShows(page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void) {
+        if let cachedTVShows = cachedTVShows[page] {
+            completion(.success(cachedTVShows))
+        }
+
         requestTVShows(page: page) { result in
             switch result {
             case .success(let response):
-                let TVShows = response.map({TVShow(
-                    name: $0.name,
-                    imageURL: $0.image.medium
-                )})
+                let TVShows = response.map({TVShow(response: $0)})
                 completion(.success(TVShows))
             case .failure(let error):
                 completion(.failure(error))
@@ -67,5 +84,12 @@ extension HomeService: HomeServiceProtocol {
                 }
             }
         }
+    }
+}
+
+extension TVShow {
+    init(response: TVShowResponse) {
+        name = response.name ?? "-"
+        imageURL = response.image?.medium
     }
 }

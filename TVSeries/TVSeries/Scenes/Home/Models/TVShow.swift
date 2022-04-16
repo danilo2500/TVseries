@@ -10,5 +10,5 @@ import UIKit.UIImage
 
 struct TVShow {
     let name: String
-    let imageURL: String
+    let imageURL: String?
 }

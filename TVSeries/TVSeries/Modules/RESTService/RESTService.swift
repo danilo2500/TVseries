@@ -28,6 +28,7 @@ class RESTService<T: RESTRequest> {
                         let object = try JSONDecoder().decode(U.self, from: data)
                         completion(.success(object))
                     } catch {
+                        print(response)
                         completion(.failure(error))
                     }
                 } else {

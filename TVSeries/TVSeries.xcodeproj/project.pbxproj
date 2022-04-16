@@ -23,6 +23,7 @@
 		55C2410E2809D80800EFA02D /* TVMazeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2410D2809D80800EFA02D /* TVMazeAPI.swift */; };
 		55C241102809D9F200EFA02D /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2410F2809D9F200EFA02D /* HomeService.swift */; };
 		55C241122809DB6C00EFA02D /* TVShowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C241112809DB6C00EFA02D /* TVShowResponse.swift */; };
+		55C24117280A434600EFA02D /* TVShowQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24116280A434600EFA02D /* TVShowQueryResponse.swift */; };
 		55E001662809B5F600E25121 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001652809B5F600E25121 /* HomeViewModel.swift */; };
 		55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001672809B62500E25121 /* MainAppCoordinator.swift */; };
 		55E0016A2809B65600E25121 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001692809B65600E25121 /* Coordinator.swift */; };
@@ -71,6 +72,7 @@
 		55C2410D2809D80800EFA02D /* TVMazeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVMazeAPI.swift; sourceTree = "<group>"; };
 		55C2410F2809D9F200EFA02D /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		55C241112809DB6C00EFA02D /* TVShowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowResponse.swift; sourceTree = "<group>"; };
+		55C24116280A434600EFA02D /* TVShowQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowQueryResponse.swift; sourceTree = "<group>"; };
 		55E001652809B5F600E25121 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		55E001672809B62500E25121 /* MainAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppCoordinator.swift; sourceTree = "<group>"; };
 		55E001692809B65600E25121 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				55C241112809DB6C00EFA02D /* TVShowResponse.swift */,
+				55C24116280A434600EFA02D /* TVShowQueryResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 				55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */,
 				55C2410E2809D80800EFA02D /* TVMazeAPI.swift in Sources */,
 				55C241102809D9F200EFA02D /* HomeService.swift in Sources */,
+				55C24117280A434600EFA02D /* TVShowQueryResponse.swift in Sources */,
 				55C241062809D2F500EFA02D /* HTTPMethod.swift in Sources */,
 				55C241072809D2F500EFA02D /* RESTService.swift in Sources */,
 				55C241002809D19900EFA02D /* TVShow.swift in Sources */,

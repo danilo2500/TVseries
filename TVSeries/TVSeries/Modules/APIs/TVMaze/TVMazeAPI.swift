@@ -9,6 +9,7 @@ import Foundation
 
 enum TVMazeAPI {
     case getTVShows(page: Int)
+    case searchTVShow(name: String)
 }
 
 extension TVMazeAPI: RESTRequest {
@@ -21,6 +22,8 @@ extension TVMazeAPI: RESTRequest {
         switch self {
         case .getTVShows:
             return "/shows"
+        case .searchTVShow:
+            return "/search/shows"
         }
     }
     
@@ -28,12 +31,16 @@ extension TVMazeAPI: RESTRequest {
         switch self {
         case .getTVShows(let page):
             return [URLQueryItem(name: "page", value: String(page))]
+        case .searchTVShow(let name):
+            return [URLQueryItem(name: "q", value: name)]
         }
     }
     
     var httpMethod: HTTPMethod {
         switch self {
         case .getTVShows:
+            return .get
+        case .searchTVShow:
             return .get
         }
     }

@@ -14,7 +14,10 @@ final class HomeViewModel {
     //MARK: - Private Variables
     
     ///Next page to be fetched by API
-    private var page = 0
+    private var nextPage = 0
+    var isSearching = false
+    private var searchedTVShows: [TVShow] = []
+    private var tvShows: [TVShow] = []
     
     //MARK: - Private Constants
     
@@ -26,8 +29,8 @@ final class HomeViewModel {
     lazy var images = imagesSubject.asObservable()
     private let imagesSubject = PublishSubject<(UIImage, IndexPath)>()
     
-    lazy var tvShows = tvShowsSubject.asObservable()
-    private let tvShowsSubject = BehaviorSubject<[TVShow]>(value: [])
+    lazy var displayedTVShows = displayedTVShowsSubject.asObservable()
+    private let displayedTVShowsSubject = PublishSubject<[TVShow]>()
     
     lazy var error = errorSubject.asObservable()
     private let errorSubject = PublishSubject<String>()
@@ -43,12 +46,13 @@ final class HomeViewModel {
     //MARK: - Public Functions
     
     func fetchTVShows() {
-        service.fetchTVShows(page: page) { [weak self] result in
+        service.fetchTVShows(page: nextPage) { [weak self] result in
             guard let self = self else { return }
-            self.page += 1
+            self.nextPage += 1
             switch result {
             case .success(let tvShows):
-                self.tvShowsSubject.onNext(tvShows)
+                self.tvShows.append(contentsOf: tvShows)
+                self.displayedTVShowsSubject.onNext(tvShows)
             case .failure(let error):
                 print(#function, error)
                 self.errorSubject.onNext("Unable to fetch Series")
@@ -56,21 +60,36 @@ final class HomeViewModel {
         }
     }
     
+    func searchTVShow(name: String) {
+        if name.isEmpty {
+            displayedTVShowsSubject.onNext(tvShows)
+            return
+        }
+        service.searchTVShow(name: name) { result in
+            switch result {
+            case .success(let tvShows):
+                self.searchedTVShows.append(contentsOf: tvShows)
+                self.displayedTVShowsSubject.onNext(tvShows)
+            case .failure(let error):
+                print(#function, error)
+            }
+        }
+    }
+    
     func fetchImage(at indexPath: IndexPath) {
-        tvShows
-            .take(1)
-            .map{ $0[indexPath.row] }
-            .map(\.imageURL)
-            .subscribe(onNext: { [weak self] imageURL in
-                guard let self = self else { return }
-                self.service.fetchImage(withURL: imageURL) { result in
-                    switch result {
-                    case .success(let image):
-                        self.imagesSubject.onNext((image, indexPath))
-                    case .failure(let error):
-                        print(#function, error)
-                    }
-                }
-            }).disposed(by: disposeBag)
+        let tvShows = isSearching ? searchedTVShows : tvShows
+        guard let imageURL = tvShows[indexPath.row].imageURL else {
+            imagesSubject.onNext((UIImage(), indexPath))
+            return
+        }
+        service.fetchImage(withURL: imageURL) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let image):
+                self.imagesSubject.onNext((image, indexPath))
+            case .failure(let error):
+                print(#function, error)
+            }
+        }
     }
 }

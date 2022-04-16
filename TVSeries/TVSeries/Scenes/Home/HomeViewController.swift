@@ -13,8 +13,9 @@ final class HomeViewController: UITableViewController {
     
     //MARK: - Private Variables
     
-    let disposeBag = DisposeBag()
-    let viewModel: HomeViewModel
+    private var searchWorkItem: DispatchWorkItem? = nil
+    private let disposeBag = DisposeBag()
+    private let viewModel: HomeViewModel
     
     //MARK: - Initialization
     
@@ -31,14 +32,25 @@ final class HomeViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .white
+        title = "TV Shows"
         setUpBindings()
+        setUpSearchController()
         viewModel.fetchTVShows()
+    }
+    
+    //MARK: - Private Functions
+    
+    private func setUpSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
 
     private func setUpBindings() {
         tableView.dataSource = nil
-        viewModel.tvShows.bind(to: tableView.rx.items) { tableView, row, tvShow in
+        viewModel.displayedTVShows.bind(to: tableView.rx.items) { tableView, row, tvShow in
             let cell = UITableViewCell(style: .default, reuseIdentifier: "")
             cell.textLabel?.text = tvShow.name
             self.viewModel.fetchImage(at: IndexPath(row: row, section: 0))
@@ -46,11 +58,11 @@ final class HomeViewController: UITableViewController {
             return cell
         }.disposed(by: disposeBag)
         
-        tableView.rx.prefetchRows.subscribe(onNext: { [weak self] indexPaths in
-            indexPaths.forEach({
-                self?.viewModel.fetchImage(at: $0)
-            })
-        }).disposed(by: disposeBag)
+//        tableView.rx.prefetchRows.subscribe(onNext: { [weak self] indexPaths in
+//            indexPaths.forEach({
+//                self?.viewModel.fetchImage(at: $0)
+//            })
+//        }).disposed(by: disposeBag)
         
         viewModel.images.subscribe { [weak self] image, indexPath in
             guard let self = self else { return }
@@ -59,6 +71,19 @@ final class HomeViewController: UITableViewController {
         }.disposed(by: disposeBag)
 
     }
-
 }
 
+
+extension HomeViewController: UISearchResultsUpdating {
+        
+    func updateSearchResults(for searchController: UISearchController) {
+        searchWorkItem?.cancel()
+        
+        let searchWorkItem = DispatchWorkItem { [weak self] in
+            self?.viewModel.searchTVShow(name: searchController.searchBar.text ?? "")
+        }
+        self.searchWorkItem = searchWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: searchWorkItem)
+    }
+    
+}

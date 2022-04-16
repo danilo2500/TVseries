@@ -24,7 +24,7 @@ class TVShowCell: UITableViewCell {
     
     lazy var nameLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 34, weight: .light)
+        label.font = .systemFont(ofSize: 30, weight: .light)
         label.textColor = .white
         return label
     }()
@@ -54,12 +54,13 @@ class TVShowCell: UITableViewCell {
     //MARK: - Private Functions
     
     private func setUpUI() {
+        selectionStyle = .none
         backgroundColor = .clear
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(posterImageView)
         addConstraints([
-            posterImageView.heightAnchor.constraint(equalToConstant: 160),
-            posterImageView.widthAnchor.constraint(equalToConstant: 110),
+            posterImageView.heightAnchor.constraint(equalToConstant: 150),
+            posterImageView.widthAnchor.constraint(equalToConstant: 100),
             posterImageView.topAnchor.constraint(equalTo: topAnchor, constant: minimumSpacing),
             posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: minimumSpacing),
             posterImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -minimumSpacing),

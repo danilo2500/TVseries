@@ -32,33 +32,46 @@ final class HomeViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "TV Shows"
-        setUpBindings()
-        setUpSearchController()
+        setUpUI()
         viewModel.fetchTVShows()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.backgroundView = GradientView(frame: view.bounds, topColor: .navyBlue, bottomColor: .darkRoyalBlue)
+        setUpGradient()
     }
     
     //MARK: - Private Functions
+    
+    private func setUpUI() {
+        title = "TV Shows"
+        setUpTableView()
+        setUpSearchController()
+        setUpBindings()
+    }
     
     private func setUpSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         
-        
         navigationItem.searchController = searchController
         definesPresentationContext = true
         searchController.searchBar.searchTextField.textColor = .white
     }
-
-    private func setUpBindings() {
+    
+    private func setUpTableView() {
         tableView.dataSource = nil
         tableView.register(TVShowCell.self, forCellReuseIdentifier: String(describing: TVShowCell.self))
+        tableView.separatorStyle = .singleLine
+        tableView.separatorColor = .lightGray
+    }
+    
+    private func setUpGradient() {
+        tableView.backgroundView = GradientView(frame: view.bounds, topColor: .navyBlue, bottomColor: .darkRoyalBlue)
+    }
+
+    private func setUpBindings() {
         viewModel.displayedTVShows
             .bind(to: tableView.rx.items(
                 cellIdentifier: String(describing: TVShowCell.self),
@@ -80,8 +93,6 @@ final class HomeViewController: UITableViewController {
             cell?.posterImageView.image = image
         }.disposed(by: disposeBag)
     }
-
-    
 }
 
 

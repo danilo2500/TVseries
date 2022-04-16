@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func createRootViewController() -> UIViewController {
-        let navigationController = UINavigationController()
+        let navigationController = NavigationController()
         let coordinator = MainAppCoordinator(navigationController: navigationController)
         coordinator.start()
         return navigationController

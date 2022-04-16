@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class HomeViewController: UICollectionViewController {
+final class HomeViewController: UITableViewController {
     
     //MARK: - Private Variables
     
@@ -21,11 +21,7 @@ final class HomeViewController: UICollectionViewController {
     
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
-        let flowLayout = UICollectionViewCompositionalLayout.list(using: configuration)
-        super.init(collectionViewLayout: flowLayout)
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -42,21 +38,29 @@ final class HomeViewController: UICollectionViewController {
         viewModel.fetchTVShows()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.backgroundView = GradientView(frame: view.bounds, topColor: .navyBlue, bottomColor: .darkRoyalBlue)
+    }
+    
     //MARK: - Private Functions
     
     private func setUpSearchController() {
         let searchController = UISearchController()
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
+        
+        
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        searchController.searchBar.searchTextField.textColor = .white
     }
 
     private func setUpBindings() {
-        collectionView.dataSource = nil
-        collectionView.register(TVShowCell.self, forCellWithReuseIdentifier: String(describing: TVShowCell.self))
+        tableView.dataSource = nil
+        tableView.register(TVShowCell.self, forCellReuseIdentifier: String(describing: TVShowCell.self))
         viewModel.displayedTVShows
-            .bind(to: collectionView.rx.items(
+            .bind(to: tableView.rx.items(
                 cellIdentifier: String(describing: TVShowCell.self),
                 cellType: TVShowCell.self
             )) { row, tvShow, cell in
@@ -72,8 +76,8 @@ final class HomeViewController: UICollectionViewController {
         
         viewModel.images.subscribe { [weak self] image, indexPath in
             guard let self = self else { return }
-            let cell = self.collectionView.cellForItem(at: indexPath) as? TVShowCell
-            cell?.imageView.image = image
+            let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
+            cell?.posterImageView.image = image
         }.disposed(by: disposeBag)
     }
 

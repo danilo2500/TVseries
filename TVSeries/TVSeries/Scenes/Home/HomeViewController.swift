@@ -9,7 +9,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class HomeViewController: UITableViewController {
+final class HomeViewController: UICollectionViewController {
     
     //MARK: - Private Variables
     
@@ -21,7 +21,11 @@ final class HomeViewController: UITableViewController {
     
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
+        let configuration = UICollectionLayoutListConfiguration(appearance: .plain)
+        let flowLayout = UICollectionViewCompositionalLayout.list(using: configuration)
+        super.init(collectionViewLayout: flowLayout)
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
     }
     
     required init?(coder: NSCoder) {
@@ -49,13 +53,15 @@ final class HomeViewController: UITableViewController {
     }
 
     private func setUpBindings() {
-        tableView.dataSource = nil
-        viewModel.displayedTVShows.bind(to: tableView.rx.items) { tableView, row, tvShow in
-            let cell = UITableViewCell(style: .default, reuseIdentifier: "")
-            cell.textLabel?.text = tvShow.name
-            self.viewModel.fetchImage(at: IndexPath(row: row, section: 0))
-            cell.imageView?.image = UIImage()
-            return cell
+        collectionView.dataSource = nil
+        collectionView.register(TVShowCell.self, forCellWithReuseIdentifier: String(describing: TVShowCell.self))
+        viewModel.displayedTVShows
+            .bind(to: collectionView.rx.items(
+                cellIdentifier: String(describing: TVShowCell.self),
+                cellType: TVShowCell.self
+            )) { row, tvShow, cell in
+                cell.nameLabel.text = tvShow.name
+                self.viewModel.fetchImage(at: IndexPath(row: row, section: 0))
         }.disposed(by: disposeBag)
         
 //        tableView.rx.prefetchRows.subscribe(onNext: { [weak self] indexPaths in
@@ -66,11 +72,12 @@ final class HomeViewController: UITableViewController {
         
         viewModel.images.subscribe { [weak self] image, indexPath in
             guard let self = self else { return }
-            let cell = self.tableView.cellForRow(at: indexPath)
-            cell?.imageView?.image = image
+            let cell = self.collectionView.cellForItem(at: indexPath) as? TVShowCell
+            cell?.imageView.image = image
         }.disposed(by: disposeBag)
-
     }
+
+    
 }
 
 

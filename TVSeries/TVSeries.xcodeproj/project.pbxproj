@@ -24,6 +24,7 @@
 		55C241102809D9F200EFA02D /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2410F2809D9F200EFA02D /* HomeService.swift */; };
 		55C241122809DB6C00EFA02D /* TVShowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C241112809DB6C00EFA02D /* TVShowResponse.swift */; };
 		55C24117280A434600EFA02D /* TVShowQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24116280A434600EFA02D /* TVShowQueryResponse.swift */; };
+		55C2411A280B535500EFA02D /* TVShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24119280B535500EFA02D /* TVShowCell.swift */; };
 		55E001662809B5F600E25121 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001652809B5F600E25121 /* HomeViewModel.swift */; };
 		55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001672809B62500E25121 /* MainAppCoordinator.swift */; };
 		55E0016A2809B65600E25121 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001692809B65600E25121 /* Coordinator.swift */; };
@@ -73,6 +74,7 @@
 		55C2410F2809D9F200EFA02D /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		55C241112809DB6C00EFA02D /* TVShowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowResponse.swift; sourceTree = "<group>"; };
 		55C24116280A434600EFA02D /* TVShowQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowQueryResponse.swift; sourceTree = "<group>"; };
+		55C24119280B535500EFA02D /* TVShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCell.swift; sourceTree = "<group>"; };
 		55E001652809B5F600E25121 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		55E001672809B62500E25121 /* MainAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppCoordinator.swift; sourceTree = "<group>"; };
 		55E001692809B65600E25121 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -241,6 +243,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		55C24118280B532100EFA02D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				55C24119280B535500EFA02D /* TVShowCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		55E0016B2809B82700E25121 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -271,6 +281,7 @@
 		55E0016E2809B84300E25121 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				55C24118280B532100EFA02D /* Views */,
 				55C2410C2809D7FD00EFA02D /* Service */,
 				55C240FE2809D18900EFA02D /* Models */,
 				559D00A82809B0450066E545 /* HomeViewController.swift */,
@@ -532,6 +543,7 @@
 				559D00A52809B0450066E545 /* AppDelegate.swift in Sources */,
 				55E0016A2809B65600E25121 /* Coordinator.swift in Sources */,
 				55C241122809DB6C00EFA02D /* TVShowResponse.swift in Sources */,
+				55C2411A280B535500EFA02D /* TVShowCell.swift in Sources */,
 				55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */,
 				55C2410E2809D80800EFA02D /* TVMazeAPI.swift in Sources */,
 				55C241102809D9F200EFA02D /* HomeService.swift in Sources */,

@@ -31,6 +31,7 @@ final class MainAppCoordinator: Coordinator {
     private func showHomeScreen() {
         let service = HomeService()
         let viewModel = HomeViewModel(service: service)
+        
         let viewController = HomeViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }

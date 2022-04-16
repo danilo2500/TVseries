@@ -18,7 +18,6 @@ class HomeService {
     
     //MARK: - Private Variables
     
-    private var cachedTVShows: [Int: [TVShow]] = [:]
     private var cachedImages: [String: UIImage] = [:]
     
     //MARK: - Private Constants
@@ -52,10 +51,6 @@ extension HomeService: HomeServiceProtocol {
     }
     
     func fetchTVShows(page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void) {
-        if let cachedTVShows = cachedTVShows[page] {
-            completion(.success(cachedTVShows))
-        }
-
         requestTVShows(page: page) { result in
             switch result {
             case .success(let response):
@@ -89,7 +84,7 @@ extension HomeService: HomeServiceProtocol {
 
 extension TVShow {
     init(response: TVShowResponse) {
-        name = response.name ?? "-"
+        name = response.name 
         imageURL = response.image?.medium
     }
 }

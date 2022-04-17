@@ -12,6 +12,10 @@ import UIKit
 
 final class HomeViewModel {
     
+    enum NavigationAction {
+        case showDetail(tvShow: TVShow)
+    }
+    
     //MARK: - Private Variables
     
     ///Next page to be fetched by API
@@ -20,6 +24,12 @@ final class HomeViewModel {
     private var searchWorkItem: DispatchWorkItem? = nil
     private var searchedTVShows: [TVShow] = []
     private var tvShows: [TVShow] = []
+    
+    //MARK: - Computed Properties
+    
+    var currentTvShows: [TVShow] {
+        isSearching ? searchedTVShows : tvShows
+    }
     
     //MARK: - Private Constants
     
@@ -42,6 +52,9 @@ final class HomeViewModel {
     
     lazy var error = errorSubject.asObservable()
     private let errorSubject = PublishSubject<String>()
+    
+    lazy var navigationAction = navigationActionSubject.asObservable()
+    private let navigationActionSubject = PublishSubject<NavigationAction>()
         
     //MARK: - Initialization
     
@@ -67,8 +80,7 @@ final class HomeViewModel {
     }
     
     func addFavorite(at indexPath: IndexPath) {
-        let tvShows = isSearching ? searchedTVShows : tvShows
-        service.addFavorite(id: tvShows[indexPath.row].id) { [weak self] error in
+        service.addFavorite(id: currentTvShows[indexPath.row].id) { [weak self] error in
             guard let self = self else { return }
             if let error = error {
                 print(#function, error)
@@ -120,8 +132,7 @@ final class HomeViewModel {
     }
     
     func fetchImage(at indexPath: IndexPath) {
-        let tvShows = isSearching ? searchedTVShows : tvShows
-        guard let imageURL = tvShows[indexPath.row].imageURL else {
+        guard let imageURL = currentTvShows[indexPath.row].imageURL else {
             let image = UIImage(named: "movie-poster") ?? UIImage()
             imagesSubject.onNext((image, indexPath))
             return
@@ -130,10 +141,18 @@ final class HomeViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let image):
+                var tvShow = self.currentTvShows[indexPath.row]
+                tvShow.image = image
                 self.imagesSubject.onNext((image, indexPath))
             case .failure(let error):
                 print(#function, error)
             }
         }
+    }
+    
+    func showDetail(at indexPath: IndexPath) {
+        navigationActionSubject.onNext(
+            .showDetail(tvShow: currentTvShows[indexPath.row])
+        )
     }
 }

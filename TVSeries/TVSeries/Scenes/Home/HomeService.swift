@@ -55,7 +55,15 @@ class HomeService {
                 id: response.id,
                 name: response.name,
                 imageURL:  response.image?.medium,
-                isFavorite: favoriteIDs.contains(where: {response.id == $0})
+                isFavorite: favoriteIDs.contains(where: {response.id == $0}),
+                genres: response.genres,
+                scheduleTime: response.schedule.time,
+                scheduleDays: response.schedule.days,
+                summary: response.summary
+//                    .replacingOccurrences(of: "<p>", with: "")
+//                    .replacingOccurrences(of: "<b>", with: "")
+//                    .replacingOccurrences(of: "</b>", with: "")
+//                    .replacingOccurrences(of: "</p>", with: "")
             )
         }
     }

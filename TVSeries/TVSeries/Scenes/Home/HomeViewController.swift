@@ -36,14 +36,10 @@ final class HomeViewController: UITableViewController {
         viewModel.fetchTVShows()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setUpGradient()
-    }
-    
     //MARK: - Private Functions
     
     private func setUpUI() {
+        view.backgroundColor = .black
         title = "TV Shows"
         setUpTableView()
         setUpSearchController()
@@ -66,12 +62,8 @@ final class HomeViewController: UITableViewController {
         tableView.estimatedRowHeight = 194
     }
     
-    private func setUpGradient() {
-        tableView.backgroundView = GradientView(frame: view.bounds, topColor: .navyBlue, bottomColor: .darkRoyalBlue)
-    }
-
     private func setUpBindings() {
-        viewModel.displayedTVShows.bind(onNext: { [weak self] tvShows in
+        viewModel.displayedTVShows.subscribe(onNext: { [weak self] tvShows in
             guard let self = self else { return }
             self.tvShows = tvShows
             self.tableView.reloadData()
@@ -118,6 +110,10 @@ extension HomeViewController {
         viewModel.fetchImage(at: indexPath)
                 
         return cell ?? UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.showDetail(at: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

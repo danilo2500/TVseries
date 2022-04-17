@@ -7,12 +7,14 @@
 
 import Foundation
 import UIKit.UIViewController
+import RxSwift
 
 final class MainAppCoordinator: Coordinator {
     
     //MARK: - Private Variables
     
     private(set) var navigationController: UINavigationController
+    private let disposeBag = DisposeBag()
     
     //MARK: - Initialization
     
@@ -33,6 +35,20 @@ final class MainAppCoordinator: Coordinator {
         let viewModel = HomeViewModel(service: service)
         
         let viewController = HomeViewController(viewModel: viewModel)
+        navigationController.pushViewController(viewController, animated: true)
+        
+        viewModel.navigationAction.subscribe(onNext: { [weak self] navigationAction in
+            guard let self = self else { return }
+            switch navigationAction {
+            case .showDetail(let tvShow):
+                self.showDetailScreen(tvShow: tvShow)
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    private func showDetailScreen(tvShow: TVShow) {
+        let viewModel = DetailViewModel(tvShow: tvShow)
+        let viewController = DetailViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

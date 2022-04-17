@@ -13,20 +13,20 @@ struct TVShowResponse: Codable {
     let name: String
     let type: String?
     let language: String?
-    let genres: [String]?
+    let genres: [String]
     let status: String?
     let runtime: Int?
     let averageRuntime: Int?
     let premiered, ended: String?
     let officialSite: String?
-    let schedule: ScheduleResponse?
+    let schedule: ScheduleResponse
     let rating: RatingResponse?
     let weight: Int?
     let network: NetworkResponse?
     let webChannel: NetworkResponse?
     let externals: ExternalsResponse?
     let image: ImageResponse?
-    let summary: String?
+    let summary: String
     let updated: Int?
     let links: LinksResponse?
 

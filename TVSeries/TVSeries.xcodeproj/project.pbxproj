@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		55069E17280CC169004AF97F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55069E16280CC169004AF97F /* DetailViewController.swift */; };
+		55069E19280CC17E004AF97F /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55069E18280CC17E004AF97F /* DetailView.swift */; };
+		55069E1B280CCCB3004AF97F /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55069E1A280CCCB3004AF97F /* DetailViewModel.swift */; };
 		559D00A52809B0450066E545 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00A42809B0450066E545 /* AppDelegate.swift */; };
 		559D00A72809B0450066E545 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00A62809B0450066E545 /* SceneDelegate.swift */; };
 		559D00A92809B0450066E545 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00A82809B0450066E545 /* HomeViewController.swift */; };
@@ -25,7 +28,6 @@
 		55C241122809DB6C00EFA02D /* TVShowResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C241112809DB6C00EFA02D /* TVShowResponse.swift */; };
 		55C24117280A434600EFA02D /* TVShowQueryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24116280A434600EFA02D /* TVShowQueryResponse.swift */; };
 		55C2411A280B535500EFA02D /* TVShowCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24119280B535500EFA02D /* TVShowCell.swift */; };
-		55C2411F280B7A9900EFA02D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2411E280B7A9900EFA02D /* GradientView.swift */; };
 		55C24122280B7CF400EFA02D /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24121280B7CF400EFA02D /* Extension+UIColor.swift */; };
 		55C24126280B811000EFA02D /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24125280B811000EFA02D /* NavigationController.swift */; };
 		55C24138280C7D6300EFA02D /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55C24136280C7D6300EFA02D /* Database.xcdatamodeld */; };
@@ -61,6 +63,9 @@
 /* Begin PBXFileReference section */
 		2A60922DE68781740B3183FD /* Pods-TVSeriesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVSeriesTests.release.xcconfig"; path = "Target Support Files/Pods-TVSeriesTests/Pods-TVSeriesTests.release.xcconfig"; sourceTree = "<group>"; };
 		30356409DFFA26C44CAF250A /* Pods-TVSeries-TVSeriesUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TVSeries-TVSeriesUITests.release.xcconfig"; path = "Target Support Files/Pods-TVSeries-TVSeriesUITests/Pods-TVSeries-TVSeriesUITests.release.xcconfig"; sourceTree = "<group>"; };
+		55069E16280CC169004AF97F /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		55069E18280CC17E004AF97F /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		55069E1A280CCCB3004AF97F /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		559D00A12809B0450066E545 /* TVSeries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVSeries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		559D00A42809B0450066E545 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		559D00A62809B0450066E545 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,7 +88,6 @@
 		55C241112809DB6C00EFA02D /* TVShowResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowResponse.swift; sourceTree = "<group>"; };
 		55C24116280A434600EFA02D /* TVShowQueryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowQueryResponse.swift; sourceTree = "<group>"; };
 		55C24119280B535500EFA02D /* TVShowCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVShowCell.swift; sourceTree = "<group>"; };
-		55C2411E280B7A9900EFA02D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		55C24121280B7CF400EFA02D /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		55C24125280B811000EFA02D /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		55C24137280C7D6300EFA02D /* Database.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database.xcdatamodel; sourceTree = "<group>"; };
@@ -152,6 +156,16 @@
 				2A60922DE68781740B3183FD /* Pods-TVSeriesTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		55069E15280CC133004AF97F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				55069E16280CC169004AF97F /* DetailViewController.swift */,
+				55069E18280CC17E004AF97F /* DetailView.swift */,
+				55069E1A280CCCB3004AF97F /* DetailViewModel.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		559D00982809B0450066E545 = {
@@ -260,14 +274,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		55C2411B280B757F00EFA02D /* Gradient */ = {
-			isa = PBXGroup;
-			children = (
-				55C2411E280B7A9900EFA02D /* GradientView.swift */,
-			);
-			path = Gradient;
-			sourceTree = "<group>";
-		};
 		55C24120280B7CE300EFA02D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,7 +332,6 @@
 				55C2413E280C7DD600EFA02D /* DataPersistance */,
 				55C24123280B80FC00EFA02D /* NavigationController */,
 				55C24120280B7CE300EFA02D /* Extensions */,
-				55C2411B280B757F00EFA02D /* Gradient */,
 				55C241132809E09700EFA02D /* APIs */,
 				55C241012809D2EA00EFA02D /* RESTService */,
 				55E0016B2809B82700E25121 /* Coordinator */,
@@ -337,6 +342,7 @@
 		55E0016D2809B83D00E25121 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				55069E15280CC133004AF97F /* Detail */,
 				55E0016E2809B84300E25121 /* Home */,
 			);
 			path = Scenes;
@@ -603,14 +609,16 @@
 			files = (
 				55C241092809D2F500EFA02D /* RESTErrors.swift in Sources */,
 				559D00A92809B0450066E545 /* HomeViewController.swift in Sources */,
+				55069E17280CC169004AF97F /* DetailViewController.swift in Sources */,
 				55C241082809D2F500EFA02D /* RESTRequest.swift in Sources */,
+				55069E1B280CCCB3004AF97F /* DetailViewModel.swift in Sources */,
 				559D00A52809B0450066E545 /* AppDelegate.swift in Sources */,
 				55E0016A2809B65600E25121 /* Coordinator.swift in Sources */,
 				55C241122809DB6C00EFA02D /* TVShowResponse.swift in Sources */,
+				55069E19280CC17E004AF97F /* DetailView.swift in Sources */,
 				55C24138280C7D6300EFA02D /* Database.xcdatamodeld in Sources */,
 				55C2411A280B535500EFA02D /* TVShowCell.swift in Sources */,
 				55C24140280C7DF200EFA02D /* CoreDataManager.swift in Sources */,
-				55C2411F280B7A9900EFA02D /* GradientView.swift in Sources */,
 				55C24142280C7E4100EFA02D /* Extension+UIApplication.swift in Sources */,
 				55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */,
 				55C2410E2809D80800EFA02D /* TVMazeAPI.swift in Sources */,

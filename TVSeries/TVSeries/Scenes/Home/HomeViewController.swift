@@ -63,7 +63,6 @@ final class HomeViewController: UITableViewController {
     private func setUpTableView() {
         tableView.dataSource = nil
         tableView.register(TVShowCell.self, forCellReuseIdentifier: String(describing: TVShowCell.self))
-//        tableView.separatorStyle = .none
         tableView.separatorColor = .lightGray
         tableView.estimatedRowHeight = 194
     }
@@ -82,15 +81,10 @@ final class HomeViewController: UITableViewController {
                 self.viewModel.fetchImage(at: IndexPath(row: row, section: 0))
         }.disposed(by: disposeBag)
         
-//        tableView.rx.prefetchRows.subscribe(onNext: { [weak self] indexPaths in
-//            indexPaths.forEach({
-//                self?.viewModel.fetchImage(at: $0)
-//            })
-//        }).disposed(by: disposeBag)
-        
         viewModel.images.subscribe { [weak self] image, indexPath in
             guard let self = self else { return }
             let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
+            cell?.activiyIndicator.stopAnimating()
             cell?.posterImageView.image = image
         }.disposed(by: disposeBag)
     }

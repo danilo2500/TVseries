@@ -23,6 +23,14 @@ class TVShowCell: UITableViewCell {
     }()
 
     
+    lazy var activiyIndicator: UIActivityIndicatorView = {
+        let activiyIndicator = UIActivityIndicatorView()
+        activiyIndicator.startAnimating()
+        activiyIndicator.style = .whiteLarge
+        activiyIndicator.hidesWhenStopped = true
+        return activiyIndicator
+    }()
+    
     lazy var nameLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 30, weight: .light)
@@ -54,6 +62,7 @@ class TVShowCell: UITableViewCell {
     
     override func prepareForReuse() {
         posterImageView.image = nil
+        activiyIndicator.startAnimating()
     }
     
     //MARK: - Private Functions
@@ -61,6 +70,7 @@ class TVShowCell: UITableViewCell {
     private func setUpUI() {
         selectionStyle = .none
         backgroundColor = .clear
+        
         posterImageView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(posterImageView)
         let heightConstraint = posterImageView.heightAnchor.constraint(equalToConstant: 150)
@@ -71,6 +81,13 @@ class TVShowCell: UITableViewCell {
             posterImageView.topAnchor.constraint(equalTo: topAnchor, constant: minimumSpacing),
             posterImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: minimumSpacing),
             posterImageView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -minimumSpacing),
+        ])
+        
+        activiyIndicator.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(activiyIndicator)
+        addConstraints([
+            activiyIndicator.centerXAnchor.constraint(equalTo: posterImageView.centerXAnchor),
+            activiyIndicator.centerYAnchor.constraint(equalTo: posterImageView.centerYAnchor)
         ])
 
         nameLabel.translatesAutoresizingMaskIntoConstraints = false

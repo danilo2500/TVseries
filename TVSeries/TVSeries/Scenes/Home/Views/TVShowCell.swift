@@ -31,21 +31,25 @@ class TVShowCell: UITableViewCell {
         return activiyIndicator
     }()
     
+//    lazy var stackView: UIStackView = {
+//        let stackView = UIStackView(arrangedSubviews: [nameLabel, starImageView])
+//        stackView.alignment = .top
+//        return stackView
+//    }()
+    
     lazy var nameLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.font = .systemFont(ofSize: 30, weight: .light)
         label.textColor = .white
         return label
     }()
-    
-    lazy var genresLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    lazy var favoriteButton: UIButton = {
-        let button = UIButton()
-        return button
+        
+    var starWidthConstraint: NSLayoutConstraint?
+    lazy var starImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "filled-star")
+        return imageView
     }()
     
     //MARK: - Initialization
@@ -63,6 +67,7 @@ class TVShowCell: UITableViewCell {
     override func prepareForReuse() {
         posterImageView.image = nil
         activiyIndicator.startAnimating()
+        starWidthConstraint?.constant = 0
     }
     
     //MARK: - Private Functions
@@ -95,7 +100,38 @@ class TVShowCell: UITableViewCell {
         addConstraints([
             nameLabel.topAnchor.constraint(equalTo: topAnchor, constant: minimumSpacing),
             nameLabel.leadingAnchor.constraint(equalTo: posterImageView.trailingAnchor, constant: minimumSpacing),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -minimumSpacing),
+            nameLabel.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: minimumSpacing)
         ])
+        
+        addSubview(starImageView)
+        starImageView.translatesAutoresizingMaskIntoConstraints = false
+        addConstraints([
+            starImageView.heightAnchor.constraint(equalToConstant: 40),
+            starImageView.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor, constant: minimumSpacing),
+            starImageView.topAnchor.constraint(equalTo: topAnchor, constant: minimumSpacing),
+            starImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -minimumSpacing),
+        ])
+        starWidthConstraint = starImageView.widthAnchor.constraint(equalToConstant: 0)
+        starWidthConstraint?.isActive = true
+    }
+    
+    func showFavorite(animated: Bool) {
+//        setNeedsUpdateConstraints()
+        self.starWidthConstraint?.constant = 40
+        if animated {
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut) {
+                self.layoutIfNeeded()
+            }
+        }
+    }
+    
+    func removeFavorite(animated: Bool) {
+//        setNeedsUpdateConstraints()
+        self.starWidthConstraint?.constant = 0
+        if animated {
+            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut) {
+                self.layoutIfNeeded()
+            }
+        }
     }
 }

@@ -12,7 +12,8 @@ protocol HomeServiceProtocol {
     func fetchTVShows(page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void)
     func searchTVShow(name: String, completion: @escaping (Result<[TVShow], Error>) -> Void)
     func fetchImage(withURL url: String, completion: @escaping (Result<UIImage, Error>) -> Void)
-    func addFavorite(id: Int, completion: @escaping (Result<Bool, Error>) -> Void)
+    func addFavorite(id: Int, completion: @escaping (Error?) -> Void)
+    func removeFavorite(id: Int, completion: @escaping (Error?) -> Void)
 }
 
 class HomeService {
@@ -23,7 +24,8 @@ class HomeService {
     
     //MARK: - Private Constants
     
-    let service = RESTService<TVMazeAPI>()
+    private let coreDataManager = CoreDataManager()
+    private let service = RESTService<TVMazeAPI>()
     
     //MARK: - Private Functions
     
@@ -34,16 +36,70 @@ class HomeService {
     private func requestSearchTVShows(name: String, completion: @escaping (Result<[TVShowQueryResponse], Error>) -> Void) {
         service.request(.searchTVShow(name: name), completion: completion)
     }
+    
+    private func requestFavoritesID(completion: @escaping (Result<[Int], Error>) -> Void) {
+        CoreDataManager().getAll(entityType: TVShowEntity.self) { result in
+            switch result {
+            case .success(let tvShowEntities):
+                let ids = tvShowEntities.map({ Int($0.id) })
+                completion(.success(ids))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    private func createTVShow(from response: [TVShowResponse], favoriteIDs: [Int]) -> [TVShow] {
+        return response.map { response in
+            return TVShow(
+                id: response.id,
+                name: response.name,
+                imageURL:  response.image?.medium,
+                isFavorite: favoriteIDs.contains(where: {response.id == $0})
+            )
+        }
+    }
 }
 
 //MARK: - HomeServiceProtocol
 
 extension HomeService: HomeServiceProtocol {
+    
+    //MARK: - Core data
+    
+    func addFavorite(id: Int, completion: @escaping (Error?) -> Void) {
+        let object = TVShowEntity()
+        object.id = Int32(id)
+        
+        CoreDataManager().save(object: object, completion: completion)
+    }
+    
+    func removeFavorite(id: Int, completion: (Error?) -> Void) {
+        CoreDataManager().get(entityType: TVShowEntity.self, withId: id) { (result) in
+            switch result {
+            case .success(let favorites):
+                favorites.forEach { CoreDataManager().delete(object: $0, completion: nil)}
+                completion(nil)
+            case .failure(let error):
+                completion(error)
+            }
+        }
+    }
+    
+    //MARK: - Service
+    
     func searchTVShow(name: String, completion: @escaping (Result<[TVShow], Error>) -> Void) {
+        var favoriteIDs: [Int] = []
+        requestFavoritesID { result in
+            if case let .success(ids) = result {
+                favoriteIDs = ids
+            }
+        }
         requestSearchTVShows(name: name) { result in
             switch result {
             case .success(let response):
-                let TVShows = response.map(\.show).map({TVShow(response: $0)})
+                let shows = response.map(\.show)
+                let TVShows = self.createTVShow(from: shows, favoriteIDs: favoriteIDs)
                 completion(.success(TVShows))
             case .failure(let error):
                 completion(.failure(error))
@@ -52,10 +108,16 @@ extension HomeService: HomeServiceProtocol {
     }
     
     func fetchTVShows(page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void) {
+        var favoriteIDs: [Int] = []
+        requestFavoritesID { result in
+            if case let .success(ids) = result {
+                favoriteIDs = ids
+            }
+        }
         requestTVShows(page: page) { result in
             switch result {
             case .success(let response):
-                let TVShows = response.map({TVShow(response: $0)})
+                let TVShows = self.createTVShow(from: response, favoriteIDs: favoriteIDs)
                 completion(.success(TVShows))
             case .failure(let error):
                 completion(.failure(error))
@@ -80,12 +142,5 @@ extension HomeService: HomeServiceProtocol {
                 }
             }
         }
-    }
-}
-
-extension TVShow {
-    init(response: TVShowResponse) {
-        name = response.name 
-        imageURL = response.image?.medium
     }
 }

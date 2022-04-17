@@ -15,7 +15,8 @@ final class HomeViewModel {
     
     ///Next page to be fetched by API
     private var nextPage = 0
-    var isSearching = false
+    private var isSearching = false
+    private var searchWorkItem: DispatchWorkItem? = nil
     private var searchedTVShows: [TVShow] = []
     private var tvShows: [TVShow] = []
     
@@ -25,7 +26,13 @@ final class HomeViewModel {
     private let service: HomeServiceProtocol
     
     //MARK: - Observables
-        
+    
+    lazy var favoriteRemoved = favoriteRemovedSubject.asObservable()
+    private let favoriteRemovedSubject = PublishSubject<IndexPath>()
+
+    lazy var favoriteAdded = favoriteAddedSubject.asObservable()
+    private let favoriteAddedSubject = PublishSubject<IndexPath>()
+    
     lazy var images = imagesSubject.asObservable()
     private let imagesSubject = PublishSubject<(UIImage, IndexPath)>()
     
@@ -34,8 +41,6 @@ final class HomeViewModel {
     
     lazy var error = errorSubject.asObservable()
     private let errorSubject = PublishSubject<String>()
-    
-    lazy var indexPaths = errorSubject.asObservable()
         
     //MARK: - Initialization
     
@@ -60,8 +65,31 @@ final class HomeViewModel {
         }
     }
     
-    func addFavorite(at indexPath) {
-        
+    func addFavorite(at indexPath: IndexPath) {
+        let tvShows = isSearching ? searchedTVShows : tvShows
+        service.addFavorite(id: tvShows[indexPath.row].id) { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print(#function, error)
+                self.errorSubject.onNext("Unable to add favorite")
+            } else {
+                self.favoriteAddedSubject.onNext(indexPath)
+            }
+            
+        }
+    }
+    
+    func removeFavorite(at indexPath: IndexPath) {
+        let tvShows = isSearching ? searchedTVShows : tvShows
+        service.removeFavorite(id: tvShows[indexPath.row].id) { [weak self] error in
+            guard let self = self else { return }
+            if let error = error {
+                print(#function, error)
+                self.errorSubject.onNext("Unable to remove from favorites")
+            } else {
+                self.favoriteRemovedSubject.onNext(indexPath)
+            }
+        }
     }
     
     func searchTVShow(name: String) {
@@ -69,15 +97,23 @@ final class HomeViewModel {
             displayedTVShowsSubject.onNext(tvShows)
             return
         }
-        service.searchTVShow(name: name) { result in
-            switch result {
-            case .success(let tvShows):
-                self.searchedTVShows.append(contentsOf: tvShows)
-                self.displayedTVShowsSubject.onNext(tvShows)
-            case .failure(let error):
-                print(#function, error)
+        
+        searchWorkItem?.cancel()
+        
+        let searchWorkItem = DispatchWorkItem { [weak self] in
+            self?.service.searchTVShow(name: name) { [weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case .success(let tvShows):
+                    self.searchedTVShows.append(contentsOf: tvShows)
+                    self.displayedTVShowsSubject.onNext(tvShows)
+                case .failure(let error):
+                    print(#function, error)
+                }
             }
         }
+        self.searchWorkItem = searchWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: searchWorkItem)
     }
     
     func fetchImage(at indexPath: IndexPath) {

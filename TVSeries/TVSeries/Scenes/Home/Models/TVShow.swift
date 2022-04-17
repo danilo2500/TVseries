@@ -9,6 +9,8 @@ import Foundation
 import UIKit.UIImage
 
 struct TVShow {
+    let id: Int
     let name: String
     let imageURL: String?
+    var isFavorite: Bool
 }

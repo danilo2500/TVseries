@@ -28,6 +28,11 @@
 		55C2411F280B7A9900EFA02D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2411E280B7A9900EFA02D /* GradientView.swift */; };
 		55C24122280B7CF400EFA02D /* Extension+UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24121280B7CF400EFA02D /* Extension+UIColor.swift */; };
 		55C24126280B811000EFA02D /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24125280B811000EFA02D /* NavigationController.swift */; };
+		55C24138280C7D6300EFA02D /* Database.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55C24136280C7D6300EFA02D /* Database.xcdatamodeld */; };
+		55C24140280C7DF200EFA02D /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2413F280C7DF200EFA02D /* CoreDataManager.swift */; };
+		55C24142280C7E4100EFA02D /* Extension+UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24141280C7E4100EFA02D /* Extension+UIApplication.swift */; };
+		55C24145280C80E300EFA02D /* TVShowEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24143280C80E300EFA02D /* TVShowEntity+CoreDataProperties.swift */; };
+		55C24146280C80E300EFA02D /* TVShowEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C24144280C80E300EFA02D /* TVShowEntity+CoreDataClass.swift */; };
 		55E001662809B5F600E25121 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001652809B5F600E25121 /* HomeViewModel.swift */; };
 		55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001672809B62500E25121 /* MainAppCoordinator.swift */; };
 		55E0016A2809B65600E25121 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E001692809B65600E25121 /* Coordinator.swift */; };
@@ -81,6 +86,11 @@
 		55C2411E280B7A9900EFA02D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		55C24121280B7CF400EFA02D /* Extension+UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIColor.swift"; sourceTree = "<group>"; };
 		55C24125280B811000EFA02D /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		55C24137280C7D6300EFA02D /* Database.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Database.xcdatamodel; sourceTree = "<group>"; };
+		55C2413F280C7DF200EFA02D /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		55C24141280C7E4100EFA02D /* Extension+UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIApplication.swift"; sourceTree = "<group>"; };
+		55C24143280C80E300EFA02D /* TVShowEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TVShowEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		55C24144280C80E300EFA02D /* TVShowEntity+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TVShowEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		55E001652809B5F600E25121 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		55E001672809B62500E25121 /* MainAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppCoordinator.swift; sourceTree = "<group>"; };
 		55E001692809B65600E25121 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -169,6 +179,7 @@
 		559D00A32809B0450066E545 /* TVSeries */ = {
 			isa = PBXGroup;
 			children = (
+				55C24139280C7DA000EFA02D /* Models */,
 				55E0016F2809B88300E25121 /* Resources */,
 				55E0016D2809B83D00E25121 /* Scenes */,
 				55E0016C2809B82E00E25121 /* Modules */,
@@ -213,14 +224,6 @@
 				55C241032809D2F500EFA02D /* RESTService.swift */,
 			);
 			path = RESTService;
-			sourceTree = "<group>";
-		};
-		55C2410C2809D7FD00EFA02D /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				55C2410F2809D9F200EFA02D /* HomeService.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		55C241132809E09700EFA02D /* APIs */ = {
@@ -269,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				55C24121280B7CF400EFA02D /* Extension+UIColor.swift */,
+				55C24141280C7E4100EFA02D /* Extension+UIApplication.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -279,6 +283,32 @@
 				55C24125280B811000EFA02D /* NavigationController.swift */,
 			);
 			path = NavigationController;
+			sourceTree = "<group>";
+		};
+		55C2412C280B98D200EFA02D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				55C24143280C80E300EFA02D /* TVShowEntity+CoreDataProperties.swift */,
+				55C24144280C80E300EFA02D /* TVShowEntity+CoreDataClass.swift */,
+				55C24136280C7D6300EFA02D /* Database.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		55C24139280C7DA000EFA02D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				55C2412C280B98D200EFA02D /* CoreData */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		55C2413E280C7DD600EFA02D /* DataPersistance */ = {
+			isa = PBXGroup;
+			children = (
+				55C2413F280C7DF200EFA02D /* CoreDataManager.swift */,
+			);
+			path = DataPersistance;
 			sourceTree = "<group>";
 		};
 		55E0016B2809B82700E25121 /* Coordinator */ = {
@@ -293,6 +323,7 @@
 		55E0016C2809B82E00E25121 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				55C2413E280C7DD600EFA02D /* DataPersistance */,
 				55C24123280B80FC00EFA02D /* NavigationController */,
 				55C24120280B7CE300EFA02D /* Extensions */,
 				55C2411B280B757F00EFA02D /* Gradient */,
@@ -315,10 +346,10 @@
 			isa = PBXGroup;
 			children = (
 				55C24118280B532100EFA02D /* Views */,
-				55C2410C2809D7FD00EFA02D /* Service */,
 				55C240FE2809D18900EFA02D /* Models */,
 				559D00A82809B0450066E545 /* HomeViewController.swift */,
 				55E001652809B5F600E25121 /* HomeViewModel.swift */,
+				55C2410F2809D9F200EFA02D /* HomeService.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -576,8 +607,11 @@
 				559D00A52809B0450066E545 /* AppDelegate.swift in Sources */,
 				55E0016A2809B65600E25121 /* Coordinator.swift in Sources */,
 				55C241122809DB6C00EFA02D /* TVShowResponse.swift in Sources */,
+				55C24138280C7D6300EFA02D /* Database.xcdatamodeld in Sources */,
 				55C2411A280B535500EFA02D /* TVShowCell.swift in Sources */,
+				55C24140280C7DF200EFA02D /* CoreDataManager.swift in Sources */,
 				55C2411F280B7A9900EFA02D /* GradientView.swift in Sources */,
+				55C24142280C7E4100EFA02D /* Extension+UIApplication.swift in Sources */,
 				55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */,
 				55C2410E2809D80800EFA02D /* TVMazeAPI.swift in Sources */,
 				55C241102809D9F200EFA02D /* HomeService.swift in Sources */,
@@ -586,9 +620,11 @@
 				55C24117280A434600EFA02D /* TVShowQueryResponse.swift in Sources */,
 				55C241062809D2F500EFA02D /* HTTPMethod.swift in Sources */,
 				55C241072809D2F500EFA02D /* RESTService.swift in Sources */,
+				55C24145280C80E300EFA02D /* TVShowEntity+CoreDataProperties.swift in Sources */,
 				55C241002809D19900EFA02D /* TVShow.swift in Sources */,
 				559D00A72809B0450066E545 /* SceneDelegate.swift in Sources */,
 				55E001662809B5F600E25121 /* HomeViewModel.swift in Sources */,
+				55C24146280C80E300EFA02D /* TVShowEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,6 +958,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		55C24136280C7D6300EFA02D /* Database.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				55C24137280C7D6300EFA02D /* Database.xcdatamodel */,
+			);
+			currentVersion = 55C24137280C7D6300EFA02D /* Database.xcdatamodel */;
+			path = Database.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 559D00992809B0450066E545 /* Project object */;
 }

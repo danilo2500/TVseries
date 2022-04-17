@@ -13,7 +13,7 @@ final class HomeViewController: UITableViewController {
     
     //MARK: - Private Variables
     
-    private var searchWorkItem: DispatchWorkItem? = nil
+    private var tvShows: [TVShow] = []
     private let disposeBag = DisposeBag()
     private let viewModel: HomeViewModel
     
@@ -61,7 +61,6 @@ final class HomeViewController: UITableViewController {
     }
     
     private func setUpTableView() {
-        tableView.dataSource = nil
         tableView.register(TVShowCell.self, forCellReuseIdentifier: String(describing: TVShowCell.self))
         tableView.separatorColor = .lightGray
         tableView.estimatedRowHeight = 194
@@ -72,47 +71,78 @@ final class HomeViewController: UITableViewController {
     }
 
     private func setUpBindings() {
-//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
-        viewModel.displayedTVShows
-            .bind(to: tableView.rx.items(
-                cellIdentifier: String(describing: TVShowCell.self),
-                cellType: TVShowCell.self
-            )) { row, tvShow, cell in
-                cell.nameLabel.text = tvShow.name
-                self.viewModel.fetchImage(at: IndexPath(row: row, section: 0))
-        }.disposed(by: disposeBag)
-        
+        viewModel.displayedTVShows.bind(onNext: { [weak self] tvShows in
+            guard let self = self else { return }
+            self.tvShows = tvShows
+            self.tableView.reloadData()
+        }).disposed(by: disposeBag)
+                  
         viewModel.images.subscribe { [weak self] image, indexPath in
             guard let self = self else { return }
             let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
             cell?.activiyIndicator.stopAnimating()
             cell?.posterImageView.image = image
         }.disposed(by: disposeBag)
+        
+        viewModel.favoriteAdded.subscribe(onNext: { [weak self] indexPath in
+            guard let self = self else { return }
+            self.tvShows[indexPath.row].isFavorite = true
+            let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
+            cell?.showFavorite(animated: true)
+        }).disposed(by: disposeBag)
+        
+        viewModel.favoriteRemoved.subscribe(onNext: { [weak self] indexPath in
+            guard let self = self else { return }
+            self.tvShows[indexPath.row].isFavorite = false
+            let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
+            cell?.removeFavorite(animated: true)
+        }).disposed(by: disposeBag)
+    }
+}
+
+//MARK: - UITableView Delegate/Data Source
+
+extension HomeViewController {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tvShows.count
     }
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {        let action = UIContextualAction(
-            style: .normal,
-            title: "Add Favorite")
-        { [weak self] (action, view, completionHandler) in
-            completionHandler(true)
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: TVShowCell.self), for: indexPath) as? TVShowCell
+                
+        let tvShow = tvShows[indexPath.row]
+        cell?.nameLabel.text = tvShow.name
+        if tvShow.isFavorite {
+            cell?.showFavorite(animated: false)
         }
-        action.image = UIImage(named: "star")
+        viewModel.fetchImage(at: indexPath)
+                
+        return cell ?? UITableViewCell()
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let isFavorite = tvShows[indexPath.row].isFavorite
+        
+        let action = UIContextualAction(
+            style: .normal,
+            title: isFavorite ? "Remove Favorite" : "Add Favorite"
+        ) { [weak self] _, _, completion in
+            if isFavorite {
+                self?.viewModel.removeFavorite(at: indexPath)
+            } else {
+                self?.viewModel.addFavorite(at: indexPath)
+            }
+            completion(true)
+        }
+        action.image = isFavorite ? UIImage(named: "empty-star") : UIImage(named: "filled-star") 
         action.backgroundColor = .black
+
         return UISwipeActionsConfiguration(actions: [action])
     }
 }
 
-
 extension HomeViewController: UISearchResultsUpdating {
-        
-    func updateSearchResults(for searchController: UISearchController) {
-        searchWorkItem?.cancel()
-        
-        let searchWorkItem = DispatchWorkItem { [weak self] in
-            self?.viewModel.searchTVShow(name: searchController.searchBar.text ?? "")
-        }
-        self.searchWorkItem = searchWorkItem
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(150), execute: searchWorkItem)
+    func updateSearchResults(for searchController: UISearchController) {            viewModel.searchTVShow(name: searchController.searchBar.text ?? "")
     }
     
 }

@@ -12,6 +12,7 @@ protocol HomeServiceProtocol {
     func fetchTVShows(page: Int, completion: @escaping (Result<[TVShow], Error>) -> Void)
     func searchTVShow(name: String, completion: @escaping (Result<[TVShow], Error>) -> Void)
     func fetchImage(withURL url: String, completion: @escaping (Result<UIImage, Error>) -> Void)
+    func addFavorite(id: Int, completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 class HomeService {

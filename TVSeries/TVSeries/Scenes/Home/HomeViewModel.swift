@@ -60,6 +60,10 @@ final class HomeViewModel {
         }
     }
     
+    func addFavorite(at indexPath) {
+        
+    }
+    
     func searchTVShow(name: String) {
         if name.isEmpty {
             displayedTVShowsSubject.onNext(tvShows)

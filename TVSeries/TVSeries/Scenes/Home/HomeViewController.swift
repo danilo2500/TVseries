@@ -72,6 +72,7 @@ final class HomeViewController: UITableViewController {
     }
 
     private func setUpBindings() {
+//        tableView.rx.setDelegate(self).disposed(by: disposeBag)
         viewModel.displayedTVShows
             .bind(to: tableView.rx.items(
                 cellIdentifier: String(describing: TVShowCell.self),
@@ -87,6 +88,17 @@ final class HomeViewController: UITableViewController {
             cell?.activiyIndicator.stopAnimating()
             cell?.posterImageView.image = image
         }.disposed(by: disposeBag)
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {        let action = UIContextualAction(
+            style: .normal,
+            title: "Add Favorite")
+        { [weak self] (action, view, completionHandler) in
+            completionHandler(true)
+        }
+        action.image = UIImage(named: "star")
+        action.backgroundColor = .black
+        return UISwipeActionsConfiguration(actions: [action])
     }
 }
 

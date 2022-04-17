@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import UIKit.UIImage
+import UIKit
 
 final class HomeViewModel {
     
@@ -75,7 +76,6 @@ final class HomeViewModel {
             } else {
                 self.favoriteAddedSubject.onNext(indexPath)
             }
-            
         }
     }
     
@@ -94,7 +94,9 @@ final class HomeViewModel {
     
     func searchTVShow(name: String) {
         if name.isEmpty {
-            displayedTVShowsSubject.onNext(tvShows)
+            nextPage = 0
+            fetchTVShows()
+            isSearching = false
             return
         }
         
@@ -105,7 +107,8 @@ final class HomeViewModel {
                 guard let self = self else { return }
                 switch result {
                 case .success(let tvShows):
-                    self.searchedTVShows.append(contentsOf: tvShows)
+                    self.isSearching = true
+                    self.searchedTVShows = tvShows
                     self.displayedTVShowsSubject.onNext(tvShows)
                 case .failure(let error):
                     print(#function, error)
@@ -119,7 +122,8 @@ final class HomeViewModel {
     func fetchImage(at indexPath: IndexPath) {
         let tvShows = isSearching ? searchedTVShows : tvShows
         guard let imageURL = tvShows[indexPath.row].imageURL else {
-            imagesSubject.onNext((UIImage(), indexPath))
+            let image = UIImage(named: "movie-poster") ?? UIImage()
+            imagesSubject.onNext((image, indexPath))
             return
         }
         service.fetchImage(withURL: imageURL) { [weak self] result in

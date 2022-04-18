@@ -16,6 +16,11 @@
 		55069E26280CE1FB004AF97F /* EpisodesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55069E25280CE1FB004AF97F /* EpisodesResponse.swift */; };
 		55069E28280CE28A004AF97F /* ImageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55069E27280CE28A004AF97F /* ImageResponse.swift */; };
 		55069E2A280DA48F004AF97F /* SeasonResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55069E29280DA48F004AF97F /* SeasonResponse.swift */; };
+		556D02A4280DD86600E5A6AB /* EpisodeDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D02A3280DD86600E5A6AB /* EpisodeDetailViewController.swift */; };
+		556D02A6280DD8D300E5A6AB /* EpisodeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D02A5280DD8D300E5A6AB /* EpisodeDetailView.swift */; };
+		556D02A8280DD9C200E5A6AB /* EpisodeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D02A7280DD9C200E5A6AB /* EpisodeDetailViewModel.swift */; };
+		556D02AA280DD9E400E5A6AB /* EpisodeDetailService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D02A9280DD9E400E5A6AB /* EpisodeDetailService.swift */; };
+		556D02AC280DE26C00E5A6AB /* Extension+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 556D02AB280DE26C00E5A6AB /* Extension+String.swift */; };
 		559D00A52809B0450066E545 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00A42809B0450066E545 /* AppDelegate.swift */; };
 		559D00A72809B0450066E545 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00A62809B0450066E545 /* SceneDelegate.swift */; };
 		559D00A92809B0450066E545 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 559D00A82809B0450066E545 /* HomeViewController.swift */; };
@@ -78,6 +83,11 @@
 		55069E25280CE1FB004AF97F /* EpisodesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodesResponse.swift; sourceTree = "<group>"; };
 		55069E27280CE28A004AF97F /* ImageResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResponse.swift; sourceTree = "<group>"; };
 		55069E29280DA48F004AF97F /* SeasonResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonResponse.swift; sourceTree = "<group>"; };
+		556D02A3280DD86600E5A6AB /* EpisodeDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailViewController.swift; sourceTree = "<group>"; };
+		556D02A5280DD8D300E5A6AB /* EpisodeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailView.swift; sourceTree = "<group>"; };
+		556D02A7280DD9C200E5A6AB /* EpisodeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailViewModel.swift; sourceTree = "<group>"; };
+		556D02A9280DD9E400E5A6AB /* EpisodeDetailService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDetailService.swift; sourceTree = "<group>"; };
+		556D02AB280DE26C00E5A6AB /* Extension+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+String.swift"; sourceTree = "<group>"; };
 		559D00A12809B0450066E545 /* TVSeries.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TVSeries.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		559D00A42809B0450066E545 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		559D00A62809B0450066E545 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -189,6 +199,17 @@
 				55069E23280CE14B004AF97F /* Episode.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		556D02A2280DD6EA00E5A6AB /* EpisodeDetail */ = {
+			isa = PBXGroup;
+			children = (
+				556D02A3280DD86600E5A6AB /* EpisodeDetailViewController.swift */,
+				556D02A7280DD9C200E5A6AB /* EpisodeDetailViewModel.swift */,
+				556D02A5280DD8D300E5A6AB /* EpisodeDetailView.swift */,
+				556D02A9280DD9E400E5A6AB /* EpisodeDetailService.swift */,
+			);
+			path = EpisodeDetail;
 			sourceTree = "<group>";
 		};
 		559D00982809B0450066E545 = {
@@ -305,6 +326,7 @@
 			children = (
 				55C24121280B7CF400EFA02D /* Extension+UIColor.swift */,
 				55C24141280C7E4100EFA02D /* Extension+UIApplication.swift */,
+				556D02AB280DE26C00E5A6AB /* Extension+String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -368,6 +390,7 @@
 		55E0016D2809B83D00E25121 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				556D02A2280DD6EA00E5A6AB /* EpisodeDetail */,
 				55069E15280CC133004AF97F /* Detail */,
 				55E0016E2809B84300E25121 /* Home */,
 			);
@@ -637,6 +660,7 @@
 				559D00A92809B0450066E545 /* HomeViewController.swift in Sources */,
 				55069E17280CC169004AF97F /* DetailViewController.swift in Sources */,
 				55C241082809D2F500EFA02D /* RESTRequest.swift in Sources */,
+				556D02A4280DD86600E5A6AB /* EpisodeDetailViewController.swift in Sources */,
 				55069E1B280CCCB3004AF97F /* DetailViewModel.swift in Sources */,
 				559D00A52809B0450066E545 /* AppDelegate.swift in Sources */,
 				55E0016A2809B65600E25121 /* Coordinator.swift in Sources */,
@@ -651,15 +675,19 @@
 				55069E1F280CE070004AF97F /* DetailService.swift in Sources */,
 				55C24142280C7E4100EFA02D /* Extension+UIApplication.swift in Sources */,
 				55E001682809B62500E25121 /* MainAppCoordinator.swift in Sources */,
+				556D02A8280DD9C200E5A6AB /* EpisodeDetailViewModel.swift in Sources */,
 				55C2410E2809D80800EFA02D /* TVMazeAPI.swift in Sources */,
 				55069E28280CE28A004AF97F /* ImageResponse.swift in Sources */,
 				55C241102809D9F200EFA02D /* HomeService.swift in Sources */,
 				55069E24280CE14B004AF97F /* Episode.swift in Sources */,
+				556D02A6280DD8D300E5A6AB /* EpisodeDetailView.swift in Sources */,
 				55C24122280B7CF400EFA02D /* Extension+UIColor.swift in Sources */,
 				55C24126280B811000EFA02D /* NavigationController.swift in Sources */,
 				55C24117280A434600EFA02D /* TVShowQueryResponse.swift in Sources */,
 				55C241062809D2F500EFA02D /* HTTPMethod.swift in Sources */,
 				55C241072809D2F500EFA02D /* RESTService.swift in Sources */,
+				556D02AA280DD9E400E5A6AB /* EpisodeDetailService.swift in Sources */,
+				556D02AC280DE26C00E5A6AB /* Extension+String.swift in Sources */,
 				55C24145280C80E300EFA02D /* TVShowEntity+CoreDataProperties.swift in Sources */,
 				55C241002809D19900EFA02D /* TVShow.swift in Sources */,
 				559D00A72809B0450066E545 /* SceneDelegate.swift in Sources */,

@@ -51,5 +51,21 @@ final class MainAppCoordinator: Coordinator {
         let viewModel = DetailViewModel(tvShow: tvShow, service: service)
         let viewController = DetailViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
+        
+        viewModel.navigationAction.subscribe(onNext: { [weak self] navigationAction in
+            guard let self = self else { return }
+            switch navigationAction {
+            case .showEpisodeDetail(let season, let episode):
+                self.showEpisodeDetail(season: season, episode: episode)
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    private func showEpisodeDetail(season: Season, episode: Episode) {
+        let service = EpisodeDetailService()
+        let viewModel = EpisodeDetailViewModel(episode: episode, season: season, service: service)
+        
+        let viewController = EpisodeDetailViewController(viewModel: viewModel)
+        navigationController.pushViewController(viewController, animated: true)
     }
 }

@@ -13,13 +13,14 @@ import UIKit.UIImage
 final class DetailViewModel {
     
     enum NavigationAction {
-        case dismiss
+        case showEpisodeDetail(season: Season, episode: Episode)
     }
     
     //MARK: - Private Variables
     
     private let service: DetailServiceProtocol
     private let tvShow: TVShow
+    private var seasons: [Season] = []
     
     //MARK: - Private Constants
     
@@ -45,7 +46,7 @@ final class DetailViewModel {
     lazy var summary = summarySubject.asObservable()
     private let summarySubject = BehaviorSubject<String>(value: "")
     
-    lazy var seasons = seasonsSubject.asObservable()
+    lazy var seasonsObsearvable = seasonsSubject.asObservable()
     private let seasonsSubject = BehaviorSubject<[Season]>(value: [])
         
     //MARK: - Initialization
@@ -57,7 +58,7 @@ final class DetailViewModel {
         genreSubject.onNext(tvShow.genres.joined(separator: ", "))
         imageSubject.onNext(tvShow.image ?? UIImage(named: "movie-poster"))
         airedSubject.onNext(tvShow.scheduleDays.joined(separator: ",") + " at " + tvShow.scheduleTime)
-        summarySubject.onNext(tvShow.summary)
+        summarySubject.onNext(tvShow.summary.removingTags())
     }
     
     //MARK: - Public Functions
@@ -67,10 +68,18 @@ final class DetailViewModel {
             guard let self = self else { return }
             switch result {
             case .success(let seasons):
+                self.seasons = seasons
                 self.seasonsSubject.onNext(seasons)
             case .failure(let error):
                 print(#function, error)
             }
         }
+    }
+    
+    func showEpisodeDetail(at indexPath: IndexPath) {
+        navigationActionSubject.onNext(.showEpisodeDetail(
+            season: seasons[indexPath.section],
+            episode: seasons[indexPath.section].episodes[indexPath.row]
+        ))
     }
 }

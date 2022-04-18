@@ -50,7 +50,7 @@ class DetailViewController: UIViewController {
         viewModel.aired.bind(to: ui.airedDateLabel.rx.text).disposed(by: disposeBag)
         viewModel.genre.bind(to: ui.genresLabel.rx.text).disposed(by: disposeBag)
         viewModel.summary.bind(to: ui.summaryLabel.rx.text).disposed(by: disposeBag)
-        viewModel.seasons.bind { [weak self] seasons in
+        viewModel.seasonsObsearvable.bind { [weak self] seasons in
             guard let self = self else { return }
             self.seasons = seasons
             self.ui.seasonsTableView.reloadData()
@@ -93,4 +93,7 @@ extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.showEpisodeDetail(at: indexPath)
+    }
 }

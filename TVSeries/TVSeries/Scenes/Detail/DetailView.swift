@@ -56,6 +56,13 @@ class DetailView: UIView {
         return label
     }()
     
+    lazy var seasonsTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.bounces = false
+        return tableView
+    }()
+    
     let scrollView = UIScrollView()
     
     let contentView: UIView = {
@@ -138,7 +145,16 @@ class DetailView: UIView {
             summaryLabel.topAnchor.constraint(equalTo: summaryTitleLabel.bottomAnchor, constant: minimumSpacing),
             summaryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: minimumSpacing),
             summaryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -minimumSpacing),
-            summaryLabel.bottomAnchor.constraint(lessThanOrEqualTo: safeAreaLayoutGuide.bottomAnchor, constant: -minimumSpacing),
+        ])
+        
+        contentView.addSubview(seasonsTableView)
+        seasonsTableView.translatesAutoresizingMaskIntoConstraints = false
+        addConstraints([
+            seasonsTableView.topAnchor.constraint(equalTo: summaryLabel.bottomAnchor, constant: minimumSpacing),
+            seasonsTableView.heightAnchor.constraint(equalTo: scrollView.heightAnchor),
+            seasonsTableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            seasonsTableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            seasonsTableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
 }

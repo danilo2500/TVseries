@@ -43,12 +43,6 @@ struct ExternalsResponse: Codable {
     let imdb: String?
 }
 
-// MARK: - Image
-struct ImageResponse: Codable {
-    let medium: String
-    let original: String
-}
-
 // MARK: - Links
 struct LinksResponse: Codable {
     let linksSelf: NextEpisodeResponse

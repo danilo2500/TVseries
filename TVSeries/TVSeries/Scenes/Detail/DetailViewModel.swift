@@ -18,6 +18,7 @@ final class DetailViewModel {
     
     //MARK: - Private Variables
     
+    private let service: DetailServiceProtocol
     private let tvShow: TVShow
     
     //MARK: - Private Constants
@@ -43,10 +44,14 @@ final class DetailViewModel {
     
     lazy var summary = summarySubject.asObservable()
     private let summarySubject = BehaviorSubject<String>(value: "")
+    
+    lazy var seasons = seasonsSubject.asObservable()
+    private let seasonsSubject = BehaviorSubject<[Season]>(value: [])
         
     //MARK: - Initialization
     
-    init(tvShow: TVShow) {
+    init(tvShow: TVShow, service: DetailServiceProtocol) {
+        self.service = service
         self.tvShow = tvShow
         nameSubject.onNext(tvShow.name)
         genreSubject.onNext(tvShow.genres.joined(separator: ", "))
@@ -57,5 +62,15 @@ final class DetailViewModel {
     
     //MARK: - Public Functions
     
-    
+    func fetchSeasons() {
+        service.fetchSeasons(id: tvShow.id) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let seasons):
+                self.seasonsSubject.onNext(seasons)
+            case .failure(let error):
+                print(#function, error)
+            }
+        }
+    }
 }

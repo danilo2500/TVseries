@@ -47,7 +47,8 @@ final class MainAppCoordinator: Coordinator {
     }
     
     private func showDetailScreen(tvShow: TVShow) {
-        let viewModel = DetailViewModel(tvShow: tvShow)
+        let service = DetailService()
+        let viewModel = DetailViewModel(tvShow: tvShow, service: service)
         let viewController = DetailViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
     }

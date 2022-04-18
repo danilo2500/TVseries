@@ -60,10 +60,6 @@ class HomeService {
                 scheduleTime: response.schedule.time,
                 scheduleDays: response.schedule.days,
                 summary: response.summary
-//                    .replacingOccurrences(of: "<p>", with: "")
-//                    .replacingOccurrences(of: "<b>", with: "")
-//                    .replacingOccurrences(of: "</b>", with: "")
-//                    .replacingOccurrences(of: "</p>", with: "")
             )
         }
     }

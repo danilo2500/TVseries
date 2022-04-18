@@ -16,6 +16,7 @@ class DetailViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: DetailViewModel
     private let ui = DetailView()
+    private var seasons: [Season] = []
     
     //MARK: - Initialization
     
@@ -36,7 +37,9 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUpTableView()
         setUpBindings()
+        viewModel.fetchSeasons()
     }
     
     //MARK: - Private Functions
@@ -47,5 +50,47 @@ class DetailViewController: UIViewController {
         viewModel.aired.bind(to: ui.airedDateLabel.rx.text).disposed(by: disposeBag)
         viewModel.genre.bind(to: ui.genresLabel.rx.text).disposed(by: disposeBag)
         viewModel.summary.bind(to: ui.summaryLabel.rx.text).disposed(by: disposeBag)
+        viewModel.seasons.bind { [weak self] seasons in
+            guard let self = self else { return }
+            self.seasons = seasons
+            self.ui.seasonsTableView.reloadData()
+        }.disposed(by: disposeBag)
     }
+    
+    private func setUpTableView() {
+        ui.seasonsTableView.delegate = self
+        ui.seasonsTableView.dataSource = self
+        ui.seasonsTableView.register(UITableViewCell.self, forCellReuseIdentifier: String(describing: UITableViewCell.self))
+    }
+}
+
+extension DetailViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return seasons.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return seasons[section].episodes.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return seasons[section].name
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
+        let header = view as? UITableViewHeaderFooterView
+        header?.textLabel?.textColor = .white
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: UITableViewCell.self), for: indexPath)
+        
+        let episode = seasons[indexPath.section].episodes[indexPath.row]
+        cell.backgroundColor = .clear
+        cell.textLabel?.textColor = .white
+        cell.textLabel?.text = episode.name
+        return cell
+    }
+    
 }

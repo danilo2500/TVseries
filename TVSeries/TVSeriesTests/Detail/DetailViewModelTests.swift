@@ -16,7 +16,7 @@ class DetailViewModelTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        service = to DetailServiceSpy()
+        service = DetailServiceSpy()
         viewModel = DetailViewModel(tvShow: Fixtures.tvShow, service: service)
     }
     

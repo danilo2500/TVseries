@@ -60,8 +60,7 @@ class DetailService {
                 name: $0.name,
                 number: $0.number,
                 summary: $0.summary,
-                imageURL: $0.image?.medium,
-                image: nil
+                imageURL: $0.image?.medium
             )
         }
     }

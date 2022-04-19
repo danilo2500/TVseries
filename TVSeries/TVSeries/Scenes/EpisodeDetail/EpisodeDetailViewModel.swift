@@ -23,7 +23,7 @@ final class EpisodeDetailViewModel {
     
     //MARK: - Observables
     
-    lazy var isLoading = isLoadingSubject.asObservable()
+    lazy var isLoading = isLoadingSubject.asDriver(onErrorJustReturn: false)
     private let isLoadingSubject = PublishSubject<Bool>()
     
     lazy var name = nameSubject.asObservable()

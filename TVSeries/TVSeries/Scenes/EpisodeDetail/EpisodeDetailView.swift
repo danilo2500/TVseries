@@ -18,7 +18,7 @@ class EpisodeDetailView: UIView {
     
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.layer.cornerRadius = 100
+        imageView.layer.cornerRadius = 90
         imageView.clipsToBounds = true
         imageView.contentMode = .scaleAspectFill
         return imageView

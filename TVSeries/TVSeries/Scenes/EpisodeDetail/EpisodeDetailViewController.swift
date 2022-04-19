@@ -50,7 +50,7 @@ class EpisodeDetailViewController: UIViewController {
         viewModel.number.bind(to: ui.numberLabel.rx.text).disposed(by: disposeBag)
         viewModel.season.bind(to: ui.seasonLabel.rx.text).disposed(by: disposeBag)
         viewModel.summary.bind(to: ui.summaryLabel.rx.text).disposed(by: disposeBag)
-        viewModel.isLoading.subscribe(onNext: { [weak self] isLoading in
+        viewModel.isLoading.drive(onNext: { [weak self] isLoading in
             guard let self = self else { return }
             if isLoading {
                 self.loadingView.showOnView(self.view)

@@ -28,7 +28,7 @@ final class DetailViewModel {
     
     //MARK: - Observables
     
-    lazy var isLoading = isLoadingSubject.asObservable()
+    lazy var isLoading = isLoadingSubject.asDriver(onErrorJustReturn: false)
     private let isLoadingSubject = PublishSubject<Bool>()
     
     lazy var name = nameSubject.asObservable()
@@ -43,13 +43,13 @@ final class DetailViewModel {
     lazy var aired = airedSubject.asObservable()
     private let airedSubject = BehaviorSubject<String>(value: "")
     
-    lazy var navigationAction = navigationActionSubject.asObservable()
-    private let navigationActionSubject = PublishSubject<NavigationAction>()
+    lazy var navigationAction = navigationActionSubject.asDriver(onErrorJustReturn: nil)
+    private let navigationActionSubject = PublishSubject<NavigationAction?>()
     
     lazy var summary = summarySubject.asObservable()
     private let summarySubject = BehaviorSubject<String>(value: "")
     
-    lazy var seasonsObsearvable = seasonsSubject.asObservable()
+    lazy var seasonsObsearvable = seasonsSubject.asDriver(onErrorJustReturn: [])
     private let seasonsSubject = BehaviorSubject<[Season]>(value: [])
         
     //MARK: - Initialization

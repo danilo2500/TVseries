@@ -64,27 +64,27 @@ final class HomeViewController: UITableViewController {
     }
     
     private func setUpBindings() {
-        viewModel.displayedTVShows.subscribe(onNext: { [weak self] tvShows in
+        viewModel.displayedTVShows.drive(onNext: { [weak self] tvShows in
             guard let self = self else { return }
             self.tvShows.append(contentsOf: tvShows)
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
                   
-        viewModel.images.subscribe { [weak self] image, indexPath in
+        viewModel.images.drive { [weak self] image, indexPath in
             guard let self = self else { return }
             let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
             cell?.activiyIndicator.stopAnimating()
             cell?.posterImageView.image = image
         }.disposed(by: disposeBag)
         
-        viewModel.favoriteAdded.subscribe(onNext: { [weak self] indexPath in
+        viewModel.favoriteAdded.drive(onNext: { [weak self] indexPath in
             guard let self = self else { return }
             self.tvShows[indexPath.row].isFavorite = true
             let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell
             cell?.showFavorite(animated: true)
         }).disposed(by: disposeBag)
         
-        viewModel.favoriteRemoved.subscribe(onNext: { [weak self] indexPath in
+        viewModel.favoriteRemoved.drive(onNext: { [weak self] indexPath in
             guard let self = self else { return }
             self.tvShows[indexPath.row].isFavorite = false
             let cell = self.tableView.cellForRow(at: indexPath) as? TVShowCell

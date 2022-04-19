@@ -37,11 +37,13 @@ final class MainAppCoordinator: Coordinator {
         let viewController = HomeViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
         
-        viewModel.navigationAction.subscribe(onNext: { [weak self] navigationAction in
+        viewModel.navigationAction.drive(onNext: { [weak self] navigationAction in
             guard let self = self else { return }
             switch navigationAction {
             case .showDetail(let tvShow):
                 self.showDetailScreen(tvShow: tvShow)
+            case .none:
+                break
             }
         }).disposed(by: disposeBag)
     }
@@ -52,11 +54,13 @@ final class MainAppCoordinator: Coordinator {
         let viewController = DetailViewController(viewModel: viewModel)
         navigationController.pushViewController(viewController, animated: true)
         
-        viewModel.navigationAction.subscribe(onNext: { [weak self] navigationAction in
+        viewModel.navigationAction.drive(onNext: { [weak self] navigationAction in
             guard let self = self else { return }
             switch navigationAction {
             case .showEpisodeDetail(let season, let episode):
                 self.showEpisodeDetail(season: season, episode: episode)
+            case .none:
+                break
             }
         }).disposed(by: disposeBag)
     }

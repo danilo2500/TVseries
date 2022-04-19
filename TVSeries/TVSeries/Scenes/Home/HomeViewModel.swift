@@ -7,8 +7,8 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 import UIKit.UIImage
-import UIKit
 
 final class HomeViewModel {
     
@@ -38,23 +38,23 @@ final class HomeViewModel {
     
     //MARK: - Observables
     
-    lazy var favoriteRemoved = favoriteRemovedSubject.asObservable()
+    lazy var favoriteRemoved = favoriteRemovedSubject.asDriver(onErrorJustReturn: .init())
     private let favoriteRemovedSubject = PublishSubject<IndexPath>()
 
-    lazy var favoriteAdded = favoriteAddedSubject.asObservable()
+    lazy var favoriteAdded = favoriteAddedSubject.asDriver(onErrorJustReturn: .init())
     private let favoriteAddedSubject = PublishSubject<IndexPath>()
     
-    lazy var images = imagesSubject.asObservable()
+    lazy var images = imagesSubject.asDriver(onErrorJustReturn: (.init(),.init()))
     private let imagesSubject = PublishSubject<(UIImage, IndexPath)>()
     
-    lazy var displayedTVShows = displayedTVShowsSubject.asObservable()
+    lazy var displayedTVShows = displayedTVShowsSubject.asDriver(onErrorJustReturn: .init())
     private let displayedTVShowsSubject = PublishSubject<[TVShow]>()
     
-    lazy var error = errorSubject.asObservable()
+    lazy var error = errorSubject.asDriver(onErrorJustReturn: .init())
     private let errorSubject = PublishSubject<String>()
     
-    lazy var navigationAction = navigationActionSubject.asObservable()
-    private let navigationActionSubject = PublishSubject<NavigationAction>()
+    lazy var navigationAction = navigationActionSubject.asDriver(onErrorJustReturn: nil)
+    private let navigationActionSubject = PublishSubject<NavigationAction?>()
         
     //MARK: - Initialization
     

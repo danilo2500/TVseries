@@ -57,6 +57,7 @@ final class HomeViewController: UITableViewController {
     }
     
     private func setUpTableView() {
+        tableView.prefetchDataSource = self
         tableView.register(TVShowCell.self, forCellReuseIdentifier: String(describing: TVShowCell.self))
         tableView.separatorColor = .lightGray
         tableView.estimatedRowHeight = 194
@@ -65,7 +66,7 @@ final class HomeViewController: UITableViewController {
     private func setUpBindings() {
         viewModel.displayedTVShows.subscribe(onNext: { [weak self] tvShows in
             guard let self = self else { return }
-            self.tvShows = tvShows
+            self.tvShows.append(contentsOf: tvShows)
             self.tableView.reloadData()
         }).disposed(by: disposeBag)
                   
@@ -92,9 +93,9 @@ final class HomeViewController: UITableViewController {
     }
 }
 
-//MARK: - UITableView Delegate/Data Source
+//MARK: - UITableView Protocols
 
-extension HomeViewController {
+extension HomeViewController: UITableViewDataSourcePrefetching {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tvShows.count
     }
@@ -135,10 +136,13 @@ extension HomeViewController {
 
         return UISwipeActionsConfiguration(actions: [action])
     }
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        viewModel.prefetchIndexPaths(indexPaths)
+    }
 }
 
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {            viewModel.searchTVShow(name: searchController.searchBar.text ?? "")
     }
-    
 }

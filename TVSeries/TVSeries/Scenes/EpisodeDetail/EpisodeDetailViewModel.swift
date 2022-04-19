@@ -23,6 +23,9 @@ final class EpisodeDetailViewModel {
     
     //MARK: - Observables
     
+    lazy var isLoading = isLoadingSubject.asObservable()
+    private let isLoadingSubject = PublishSubject<Bool>()
+    
     lazy var name = nameSubject.asObservable()
     private let nameSubject = BehaviorSubject<String>(value: "")
     
@@ -67,8 +70,10 @@ final class EpisodeDetailViewModel {
             imageSubject.onNext(image)
             return
         }
-        service.fetchImage(withURL: imageURL) { [weak self] result in
+        isLoadingSubject.onNext(true)
+        service.fetchImage(withURL: imageURL) { [weak self] result in    
             guard let self = self else { return }
+            self.isLoadingSubject.onNext(false)
             switch result {
             case .success(let image):
                 self.imageSubject.onNext(image)

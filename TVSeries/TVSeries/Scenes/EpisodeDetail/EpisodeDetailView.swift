@@ -34,7 +34,7 @@ class EpisodeDetailView: UIView {
     lazy var numberLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
         return label
     }()
@@ -42,7 +42,7 @@ class EpisodeDetailView: UIView {
     lazy var seasonLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         label.textColor = .white
         return label
     }()
@@ -112,8 +112,8 @@ class EpisodeDetailView: UIView {
         addConstraints([
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: minimumSpacing),
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: minimumSpacing),
-            imageView.heightAnchor.constraint(equalToConstant: 200),
-            imageView.widthAnchor.constraint(equalToConstant: 200),
+            imageView.heightAnchor.constraint(equalToConstant: 180),
+            imageView.widthAnchor.constraint(equalToConstant: 180),
         ])
         
         contentView.addSubview(stackView)

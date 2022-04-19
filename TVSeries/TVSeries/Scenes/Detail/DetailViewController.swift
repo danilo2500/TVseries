@@ -17,6 +17,7 @@ class DetailViewController: UIViewController {
     private let viewModel: DetailViewModel
     private let ui = DetailView()
     private var seasons: [Season] = []
+    private let loadingView = LoadingView()
     
     //MARK: - Initialization
     
@@ -55,6 +56,14 @@ class DetailViewController: UIViewController {
             self.seasons = seasons
             self.ui.seasonsTableView.reloadData()
         }.disposed(by: disposeBag)
+        viewModel.isLoading.subscribe(onNext: { [weak self] isLoading in
+            guard let self = self else { return }
+            if isLoading {
+                self.loadingView.showOnView(self.view)
+            } else {
+                self.loadingView.dismiss()
+            }
+        }).disposed(by: disposeBag)
     }
     
     private func setUpTableView() {

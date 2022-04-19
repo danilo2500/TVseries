@@ -28,6 +28,9 @@ final class DetailViewModel {
     
     //MARK: - Observables
     
+    lazy var isLoading = isLoadingSubject.asObservable()
+    private let isLoadingSubject = PublishSubject<Bool>()
+    
     lazy var name = nameSubject.asObservable()
     private let nameSubject = BehaviorSubject<String>(value: "")
 
@@ -64,8 +67,10 @@ final class DetailViewModel {
     //MARK: - Public Functions
     
     func fetchSeasons() {
+        isLoadingSubject.onNext(true)
         service.fetchSeasons(id: tvShow.id) { [weak self] result in
             guard let self = self else { return }
+            self.isLoadingSubject.onNext(false)
             switch result {
             case .success(let seasons):
                 self.seasons = seasons

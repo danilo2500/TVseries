@@ -117,6 +117,7 @@ final class HomeViewModel {
         let searchWorkItem = DispatchWorkItem { [weak self] in
             self?.service.searchTVShow(name: name) { [weak self] result in
                 guard let self = self else { return }
+                
                 switch result {
                 case .success(let tvShows):
                     self.isSearching = true
@@ -147,6 +148,15 @@ final class HomeViewModel {
             case .failure(let error):
                 print(#function, error)
             }
+        }
+    }
+    
+    func prefetchIndexPaths(_ indexPaths: [IndexPath]) {
+        if isSearching {
+            return
+        }
+        if indexPaths.contains(where: {$0.row == tvShows.count - 1}) {
+            fetchTVShows()
         }
     }
     

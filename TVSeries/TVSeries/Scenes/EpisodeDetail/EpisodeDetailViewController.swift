@@ -16,6 +16,7 @@ class EpisodeDetailViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let viewModel: EpisodeDetailViewModel
     private let ui = EpisodeDetailView()
+    private let loadingView = LoadingView()
     
     //MARK: - Initialization
     
@@ -36,8 +37,9 @@ class EpisodeDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.fetchImage()
         setUpBindings()
+        viewModel.fetchImage()
+        
     }
     
     //MARK: - Private Functions
@@ -48,5 +50,13 @@ class EpisodeDetailViewController: UIViewController {
         viewModel.number.bind(to: ui.numberLabel.rx.text).disposed(by: disposeBag)
         viewModel.season.bind(to: ui.seasonLabel.rx.text).disposed(by: disposeBag)
         viewModel.summary.bind(to: ui.summaryLabel.rx.text).disposed(by: disposeBag)
+        viewModel.isLoading.subscribe(onNext: { [weak self] isLoading in
+            guard let self = self else { return }
+            if isLoading {
+                self.loadingView.showOnView(self.view)
+            } else {
+                self.loadingView.dismiss()
+            }
+        }).disposed(by: disposeBag)
     }
 }
